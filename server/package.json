@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "a dynamic, puzzle/strategy game for iOS",
   "scripts": {},
+  "main": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/EuphoniousTrapezoid/euphonious_trapezoid"
@@ -10,5 +11,8 @@
   "author": "Anton, Jordan, Rodrigo, Zach",
   "devDependencies": {
     "gulp": "^3.9.0"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
   }
 }

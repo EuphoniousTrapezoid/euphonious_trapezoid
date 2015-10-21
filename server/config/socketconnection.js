@@ -1,5 +1,5 @@
 var socketioJwt = require("socketio-jwt");
-//var Sphero = require('sphero-file-path');
+var Sphero = require('../Sphero/spheroconnection.js');
 
 module.exports = function(io) {
 
@@ -10,10 +10,10 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
     console.log('a user connected');
-    //Sphero.init(io, socket);
-    // socket.on('disconnect', function(){
-    //   console.log('user disconnected');
-    // });
+    Sphero.init(io, socket);
+    socket.on('disconnect', function(){
+      console.log('a user disconnected');
+    });
   });
 
 };

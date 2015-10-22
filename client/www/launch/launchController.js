@@ -13,8 +13,8 @@ sphero.controller('launchController', ['$scope', '$state', 'socket','player', fu
 	}
 
   socket.on('started', function(data) {
+    player.playerNum = String(data.playerNum);
     $state.go('game');
-    player.playerNum = data.playerNum;
   });
 
 }]);

@@ -17,7 +17,11 @@ sphero.factory('game', function () {
 
   // geometry and materials
   var ballGeometry;
-  var ballMaterial;
+  var playerZeroMaterial;
+  var playerOneMaterial;
+  var playerTwoMaterial;
+  var playerThreeMaterial;
+
   var anchorMaterial;
 
   // the board and the player
@@ -73,7 +77,9 @@ sphero.factory('game', function () {
 
     // Create the materials and geometry that will be used
     objects = [];
-    ballMaterial = new THREE.MeshPhongMaterial({color: 0xF47333});
+    playerZeroMaterial = new THREE.MeshPhongMaterial({color: 0xffff00});
+    playerOneMaterial = new THREE.MeshPhongMaterial({color: 0xF47333});
+    playerTwoMaterial = new THREE.MeshPhongMaterial({color: 0x00ff000});
     anchorMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
 
     ballGeometry = new THREE.SphereGeometry(50, 8, 8);
@@ -150,13 +156,16 @@ sphero.factory('game', function () {
     var state = data.state;
     var material = {
       A: anchorMaterial,
-      1: ballMaterial
+      0: playerZeroMaterial,
+      1: playerOneMaterial,
+      2: playerTwoMaterial
     }
     // create the 3d piece
     var ball = new THREE.Mesh(ballGeometry.clone(), material[state]);
+    ball.is_ob = true;
     // if there are any other 3d objects at that position, remove them
     if (board[x + "_" + y] !== undefined){
-      scene.remove(board[x + "_" + y].piece)
+      scene.remove(board[x + "_" + y].model)
     }
 
     board[x + "_" + y] = {state: state, model: ball };
@@ -181,10 +190,12 @@ sphero.factory('game', function () {
   var removePiece = function (data) {
     var x = data.coordinates.x;
     var y = data.coordinates.y;
-    if (board[data.from.x + "_" + data.from.y] && board[x + "_" + y].model !== undefined) {
-      scene.remove(board[x + "_" + y].model);
+    if (board[x + "_" + y] && board[x + "_" + y].model !== undefined) {
+      console.log('scene before removal: ', scene.children);
+      anchor.remove(board[x + "_" + y].model);
       delete board[x + "_" + y];
 
+      console.log('scene after removal: ', scene.children);
       console.log('board after deletion: ', board);
     }
   };
@@ -204,24 +215,30 @@ sphero.factory('game', function () {
 
   var moveModel = function (data) {
      board[data.from.x + "_" + data.from.y].model.position.set(data.to.x * gridStep, data.to.y * gridStep, 0);
+  };
+
+  var rotateBoard = function (data) {
+    data.forEach(function (move) {
+      movePiece(move);
+    });
   }
 
-  var rotateBoard = function (moves) {
-//      anchor.position.set(100,233,0);
-   anchor.rotation.z -= Math.PI/2;
-   console.log('moves: ', moves);
-   moves.forEach(function (data) {
-      if (data.success) {
-        board[data.to.x + "_" + data.to.y] = {};
-        board[data.to.x + "_" + data.to.y].state = board[data.from.x + "_" + data.from.y].state;
-        board[data.to.x + "_" + data.to.y].model = board[data.from.x + "_" + data.from.y].model;
-        delete board[data.from.x + "_" + data.from.y];
-      }
+//   var rotateBoard = function (moves) {
+// //      anchor.position.set(100,233,0);
+//    anchor.rotation.z -= Math.PI/2;
+//    console.log('moves: ', moves);
+//    moves.forEach(function (data) {
+//       if (data.success) {
+//         board[data.to.x + "_" + data.to.y] = {};
+//         board[data.to.x + "_" + data.to.y].state = board[data.from.x + "_" + data.from.y].state;
+//         board[data.to.x + "_" + data.to.y].model = board[data.from.x + "_" + data.from.y].model;
+//         delete board[data.from.x + "_" + data.from.y];
+//       }
 
-   });
+//    });
 
-   console.log('board after rotation: ', board);
-  };
+  //  console.log('board after rotation: ', board);
+  // };
 
   var endGame = function (data) {
 

@@ -60,7 +60,7 @@ var startGame = function(gameId, io) {
   for (i = 0; i < events.length; i++) {
 
     game.on(events[i], function(event) {
-
+      console.log('this is the name of the event', events[i]);
       io.to(gameId).emit(events[i], event);
 
     });

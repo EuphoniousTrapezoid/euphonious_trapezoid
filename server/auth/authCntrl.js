@@ -8,7 +8,7 @@ module.exports.login = function(req, res) {
   //check to see if login credentials are in database (no encrypt yet)
   var sqlQueryAsk = "SELECT Players.Player_Username, Players.Email, \
     Players.Player_ID, Players.Hash, Players.Ranking, Players.Games_Played, Friends.Friend_Name FROM Players \
-    INNER JOIN Friends ON Friends.Friend_ID = Friends.Friend_ID WHERE \
+    LEFT OUTER JOIN Friends ON Players.Player_ID = Friends.Player_ID WHERE \
     Player_Username = '" + username + "'";
 
   db.query(sqlQueryAsk, function(err, results) {

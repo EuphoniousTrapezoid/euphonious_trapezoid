@@ -44,7 +44,7 @@ var startGame = function(gameId, io) {
     socket.emit('started', {playerNum: i});
     socket.emit('state', game.getState());
   }
-  var events = ['put', 'removed', 'moved', 'rotated', 'fell', 'suspended', 'ended'];
+  var events = ['put', 'removed', 'moved', 'rotated', 'fell', 'suspended', ,'state', 'ended'];
   for (i = 0; i < events.length; i++) {
     game.on(events[i], function(event) {
       io.to(gameId).emit(this, event);

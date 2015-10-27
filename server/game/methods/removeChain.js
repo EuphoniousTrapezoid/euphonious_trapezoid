@@ -34,6 +34,7 @@ var removeChain = function( chain ) {
     this.put( to.x, to.y, event.state );
     this.get( to.x, to.y ).id = this.get( from.x, from.y ).id;
     event.success = true;
+    event.id = this.get( to.x, to.y ).id;
     this.emit( 'moved', event );
     reanchor( from );
   }.bind( this );
@@ -48,7 +49,8 @@ var removeChain = function( chain ) {
         x: x,
         y: y
       },
-      state: sphere.state
+      state: sphere.state,
+      id: sphere.id
     };
     sphere.state = 'L';
     // Update the leaves array to reflect that

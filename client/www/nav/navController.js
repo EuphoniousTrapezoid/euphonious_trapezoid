@@ -11,10 +11,12 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', 'socket', '$sta
 
 
     $scope.signUp = function(username, password, email) {
+      console.log("username: ", username, "password: ", password, "email: ", email);
       Auth.signUp(username, password, email)
         .then(function() {
           $scope.login(username, password);
         }, function(err) {
+          console.log(err);
           //handle error
         });
     };

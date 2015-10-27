@@ -23,10 +23,7 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', function($http, SpheroApiUrl) {
         username: username,
         password: password,
         email: email
-      }.then(function(resp) {
-        useCred(resp.data);
-        return resp.data;
-      })
+      }
     });
 
   };

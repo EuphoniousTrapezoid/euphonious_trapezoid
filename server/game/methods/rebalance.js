@@ -16,6 +16,7 @@ var rebalance = function( ) {
         y: sphere.coordinates.y
       },
       state: sphere.state,
+      id: sphere.id,
       success: true
     };
     var copy = sphere.copy( );
@@ -141,6 +142,7 @@ var rebalance = function( ) {
           y: sphere.coordinates.y
         },
         state: sphere.state,
+        id: sphere.id,
         success: true
       });
     }
@@ -163,6 +165,7 @@ var rebalance = function( ) {
         x: sphere.coordinates.x,
         y: sphere.coordinates.y
       },
+      id: sphere.id,
       state: sphere.state,
       success: true
     };

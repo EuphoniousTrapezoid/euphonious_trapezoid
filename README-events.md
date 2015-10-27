@@ -39,6 +39,12 @@ data: [{ from: { x: INT, y: INT},
       }...
       ]
 
+name: 'suspended'
+data: { coordinates: {x: INT, y: INT}, state: 0/1/2/3/4 }
+
+name: 'fell'
+data: { coordinates: {x: INT, y: INT}, state: 0/1/2/3/4 }
+
 ended: 
 
 // outgoing events

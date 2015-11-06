@@ -61,11 +61,12 @@ module.exports.friend = function(req, res) {
         res.status(403).send('cannot find user');
       } else {
         params[1] = results[0].Player_ID;
-        db.query(sqlQueryIns, params, function(err) {
+        db.query(sqlQueryIns, params, function(err, results) {
           if (err) {
             console.log(err);
           } else {
-            res.status(200).send(friendName + " is now a friend");
+
+            res.status(200).send(friendName);
           }
         });
       }

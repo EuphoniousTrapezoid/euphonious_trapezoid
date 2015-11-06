@@ -61,6 +61,8 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', 'player',
     token = null;
     username = undefined;
     isAuth = false;
+    player.profile = undefined;
+    player.playerNum = null;
     //$http.defaults.headers.common['X-Auth-Token'] = undefined;
   };
 
@@ -88,7 +90,7 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', 'player',
         id: myID
       }
     }).then(function(resp){
-      console.log(resp);
+      return resp;
     });
   };
 

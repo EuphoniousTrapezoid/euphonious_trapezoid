@@ -11,9 +11,9 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
     $scope.pushIt = true;
 
     $scope.single = function() {
-
-      $state.go('loading', { action: 'single' });
-
+      $state.go('profile.loading', {
+        action: 'single'
+      });
     };
 
     $scope.play = function() {
@@ -24,7 +24,9 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
             player.profile = user.profile;
             $window.localStorage.setItem('id_token', user.token);
             var isAuth = Auth.checkAuth();
-            $scope.logoutStatus = !isAuth;
+            setTimeout(function() {
+              $scope.logoutStatus = !isAuth;
+            }, 25);
             $scope.logoutStatusButtons = !isAuth;
             setTimeout(function() {
               $scope.loginStatus = isAuth;
@@ -76,13 +78,15 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
               player.profile = user.profile;
               $window.localStorage.setItem('id_token', user.token);
               var isAuth = Auth.checkAuth();
-              $scope.logoutStatus = !isAuth;
               $scope.logoutStatusButtons = !isAuth;
+              setTimeout(function() {
+                $scope.logoutStatus = !isAuth;
+              }, 25);
               setTimeout(function() {
                 $scope.loginStatus = isAuth;
               }, 150);
             } else {
-              alert('Invalid login, please login or signup');
+              //alert('Invalid login, please login or signup');
             }
           });
       }

@@ -12,19 +12,25 @@ router.config(function($stateProvider, $urlRouterProvider) {
     .state('nav', {
       url: '/nav',
       templateUrl: 'nav/nav.html',
-      controller: 'navController'
-    })
-    .state('loading', {
-      url: '/loading',
-      templateUrl: 'loading/loading.html',
-      params: { action: null },
-      controller: 'loadingController'
+      controller: 'navController',
+      cache: false
     })
     .state('profile', {
       url: '/profile',
       abstract: true,
       templateUrl: 'profile/profile.html',
       controller: 'profileController'
+    })
+    .state('profile.loading', {
+      url: '/loading',
+      params: { action: null, gameID: null },
+      views: {
+        'profile': {
+          templateUrl: 'loading/loading.html',
+          controller: 'loadingController'
+        }
+      },
+      cache: false
     })
     .state('profile.launch', {
       url: '/launch',
@@ -51,7 +57,8 @@ router.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: 'game/game.html',
           controller: 'gameController'
         }
-      }
+      },
+      cache: false
     })
     .state('profile.gameover', {
       url: '/gameover',
@@ -60,7 +67,8 @@ router.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: 'endgame/endgame.html',
           controller: 'endgameController'
         }
-      }
+      },
+      cache: false
     });
 
   // if none of the above states are matched, use this as the fallback
@@ -74,17 +82,20 @@ router.run(function($rootScope, $state, Auth) {
       $state.go('nav');
     }
   });
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+    if (fromState.name === 'profile.game' && toState.name !== 'profile.gameover') {
+      $rootScope.$broadcast('triggerLeave');
+    }
+  });
 });
 
 router.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = function() { //refactor to service for minification
-    console.log(localStorage);
     return localStorage.getItem('id_token');
   };
 
   $httpProvider.interceptors.push('jwtInterceptor');
 });
-
 
 
 // .factory('AttachTokens', function ($window) {

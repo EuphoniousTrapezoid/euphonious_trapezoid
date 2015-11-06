@@ -1,4 +1,5 @@
-sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', function($http, SpheroApiUrl, $window) {
+sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', 'player',
+ function($http, SpheroApiUrl, $window, player) {
 
   var authFactory = {};
 
@@ -60,6 +61,8 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', function($http, Sphe
     token = null;
     username = undefined;
     isAuth = false;
+    player.profile = undefined;
+    player.playerNum = null;
     //$http.defaults.headers.common['X-Auth-Token'] = undefined;
   };
 
@@ -87,9 +90,21 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', function($http, Sphe
         id: myID
       }
     }).then(function(resp){
-      console.log(resp);
+      return resp;
     });
-  }
+  };
+
+  authFactory.updateProfile = function(profile) {
+    return $http({
+      method: 'POST',
+      url: SpheroApiUrl + '/player/profile',
+      data: {
+        profile: profile
+      }
+    }).then(function(resp) {
+      return resp;
+    });
+  };
 
   return authFactory;
 
@@ -106,41 +121,39 @@ sphero.factory('socket', ['SpheroApiUrl', '$rootScope', function(SpheroApiUrl, $
   socket = io.connect(SpheroApiUrl);
   // }
 
+  return socket;
+  // return {
+  //   on: function(eventName, callback) {
+  //     socket.on(eventName, function() {
+  //       var args = arguments;
+  //       $rootScope.$apply(function() {
+  //         callback.apply(socket, args);
+  //       });
+  //     });
+  //   },
+  //   emit: function(eventName, data, callback) {
 
-  return {
-    on: function(eventName, callback) {
-      socket.on(eventName, function() {
-        var args = arguments;
-        $rootScope.$apply(function() {
-          callback.apply(socket, args);
-        });
-      });
-    },
-    emit: function(eventName, data, callback) {
-
-      socket.emit(eventName, data, function() {
-        var args = arguments;
-        $rootScope.$apply(function() {
-          if (callback) {
-            callback.apply(socket, args);
-          }
-        });
-      });
-    }
-  };
+  //     socket.emit(eventName, data, function() {
+  //       var args = arguments;
+  //       $rootScope.$apply(function() {
+  //         if (callback) {
+  //           callback.apply(socket, args);
+  //         }
+  //       });
+  //     });
+  //   }
+  // };
 
 }]);
 
 sphero.factory('player', ['$window','jwtHelper', function($window, jwtHelper) {
-  
+
   var playerNum = null;
   //information used to render to player in profile
   if ($window.localStorage.getItem('id_token')) {
     var tokenPayload = jwtHelper.decodeToken($window.localStorage.getItem('id_token'));
     var profile = tokenPayload;
   }
-  console.log(profile);
-
   return {
     playerNum: playerNum,
     profile: profile

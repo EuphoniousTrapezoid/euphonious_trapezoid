@@ -17,7 +17,7 @@ module.exports = function(app, express) {
   var FACEBOOK_APP_SECRET = "--insert-facebook-app-secret-here--";
 
   //serve static files (Sphero homepage)
-  app.use(express.static(__dirname + '/../../static'));
+  app.use(express.static(__dirname + '/../../static/www'));
 
   //set up express router instances
   var authRouter = express.Router();

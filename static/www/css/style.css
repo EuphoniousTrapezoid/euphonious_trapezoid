@@ -1,0 +1,508 @@
+/* Empty. Add your own CSS if you like */
+
+@font-face {
+    font-family: Vermin;
+    src: url("vermin-vibes-2-edm-xtc/Vermin Vibes 2 EDM XTC.otf") format("opentype");
+}
+
+#nav {
+    background-color: black;
+}
+
+.nav-title {
+    font-family: Vermin;
+    text-align: center;
+    font-size: 5em;
+    margin-bottom: 20px;
+}
+
+.blue {
+    color: #00a8db;
+}
+
+.gray {
+    color: #787b8c;
+}
+
+.green {
+    color: #97d9a1;
+}
+
+.pink {
+    color: #fc9bcb;
+}
+
+.blueb {
+    background-color: #00a8db;
+}
+
+.grayb {
+    background-color: #787b8c;
+}
+
+.greenb {
+    background-color: #97d9a1;
+}
+
+.pinkb {
+    background-color: #fc9bcb;
+}
+
+.selected {
+    border: 1px;
+    border-color: white;
+}
+
+#nav .list {
+    height: 250px;
+    margin-bottom: 2em;
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 250px;
+}
+
+#log-list {
+    padding-top: 50px;
+}
+
+#nav .item {
+    border: 0;
+    margin-bottom: 2em;
+}
+
+#nav input {
+    text-align: center;
+}
+
+#host {
+    background-color: black;
+}
+
+#loading {
+    background-color: black;
+}
+
+#spacer-wrapper {
+    display: block;
+    width: 100%;
+    height: 275px;
+    text-align: center;
+    line-height: 275px;
+    vertical-align: middle;
+}
+
+.spacer {
+    display: block;
+    width: 100%;
+    height: 275px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+input[type='text'] {
+    font-family: Vermin;
+    font-size: 2em;
+    font-weight: bold;
+    color: #555555;
+    height: 50px;
+    line-height: inherit;
+}
+
+input[type='password'] {
+    font-family: Vermin;
+    font-size: 2em;
+    font-weight: bold;
+    color: #555555;
+    height: 50px;
+    line-height: inherit;
+}
+
+/* Place Holder CSS */
+
+::-webkit-input-placeholder {
+    color: #787B8C;
+    opacity: 0.5;
+    -webkit-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:-moz-placeholder {
+    color: #787B8C;
+    opacity: 0.5;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+::-moz-placeholder {
+    color: #787B8C;
+    opacity: 0.5;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:-ms-input-placeholder {
+    color: #C1C1C1;
+    opacity: 0.5;
+    -ms-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+
+/* Place Holder CSS for Focus */
+
+:hover::-webkit-input-placeholder {
+    opacity: 0.75;
+    -webkit-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:hover:-moz-placeholder {
+    opacity: 0.75;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:hover::-moz-placeholder {
+    opacity: 0.75;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:hover:-ms-input-placeholder {
+    opacity: 0.75;
+    -ms-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+
+/* Place Holder CSS for Focus */
+
+:focus::-webkit-input-placeholder {
+    opacity: 0;
+    -webkit-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:focus:-moz-placeholder {
+    opacity: 0;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:focus::-moz-placeholder {
+    opacity: 0;
+    -moz-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+:focus:-ms-input-placeholder {
+    opacity: 0;
+    -ms-transition: opacity 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+}
+
+#nav .item-input {
+    background-color: transparent;
+}
+
+.outer-container {
+    float: left;
+    position: relative;
+    left: 50%;
+}
+
+.inner-container {
+    float: left;
+    position: relative;
+    left: -50%;
+}
+
+.nav-buttons li, .launch-buttons li {
+    display: inline-block;
+}
+
+.nav-buttons button {
+    font-family: Vermin;
+    font-size: 12px;
+    display: inline-block;
+    height: 7em;
+    width: 7em;
+    border-radius: 50px;
+    border: 1px solid #000;
+    margin-right: 6px;
+    vertical-align: center;
+}
+
+.animate-if {
+    padding: 10px;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave {
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.login-button {
+    display: block;
+    font-family: Vermin;
+    font-size: 2em;
+    font-weight: bold;
+    color: #787B8C;
+    height: 50px;
+    line-height: inherit;
+    background-color: transparent;
+    border: 0;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+
+.svg {
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+#launch {
+    background-color: black;
+}
+
+#launch button {
+    z-index: ;
+}
+
+.launch-buttons button {
+    font-family: Vermin;
+    font-size: 2em;
+    font-weight: bold;
+    display: inline-block;
+    color: #787b8c;
+    margin-right: 15px;
+    vertical-align: center;
+    line-height: inherit;
+    background-color: transparent;
+    border: 0;
+}
+
+#bottom-button {
+    font-family: Vermin;
+    font-size: 1em;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+    display: block;
+    color: #787b8c;
+    line-height: inherit;
+    background-color: transparent;
+    border: 0;
+}
+
+.user-header {
+    margin-top: 5vw;
+    font-family: Vermin;
+    font-size: 7vw;
+    font-weight: bold;
+    text-align: center;
+    color: #787b8c;
+    cursor: pointer;
+}
+
+.user-list {
+    margin-top: 5vw;
+    cursor: pointer;
+}
+
+.user {
+    font-family: Vermin;
+    font-size: 5vw;
+    font-weight: bold;
+    text-align: center;
+    color: #787b8c;
+    margin-top: 2rem;
+}
+
+#public {
+    font-family: Vermin;
+    font-size: 8vw;
+    font-weight: bold;
+    text-align: center;
+    color: #787b8c;
+    margin-top: 3rem;
+    cursor: pointer;
+}
+
+.loader {
+  font-size: 7vw;
+  margin: 50vh auto;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+@-webkit-keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em #00a8db, 2em -2em 0 0em #00a8db, 3em 0 0 -1em #00a8db, 2em 2em 0 -1em #00a8db, 0 3em 0 -1em #00a8db, -2em 2em 0 -1em #00a8db, -3em 0 0 -1em #00a8db, -2em -2em 0 0 #00a8db;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0 #00a8db, 2em -2em 0 0.2em #00a8db, 3em 0 0 0 #00a8db, 2em 2em 0 -1em #00a8db, 0 3em 0 -1em #00a8db, -2em 2em 0 -1em #00a8db, -3em 0 0 -1em #00a8db, -2em -2em 0 -1em #00a8db;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em #787b8c, 2em -2em 0 0 #787b8c, 3em 0 0 0.2em #787b8c, 2em 2em 0 0 #787b8c, 0 3em 0 -1em #787b8c, -2em 2em 0 -1em #787b8c, -3em 0 0 -1em #787b8c, -2em -2em 0 -1em #787b8c;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em #787b8c, 2em -2em 0 -1em #787b8c, 3em 0em 0 0 #787b8c, 2em 2em 0 0.2em #787b8c, 0 3em 0 0em #787b8c, -2em 2em 0 -1em #787b8c, -3em 0em 0 -1em #787b8c, -2em -2em 0 -1em #787b8c;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em #97d9a1, 2em -2em 0 -1em #97d9a1, 3em 0 0 -1em #97d9a1, 2em 2em 0 0em #97d9a1, 0 3em 0 0.2em #97d9a1, -2em 2em 0 0 #97d9a1, -3em 0em 0 -1em #97d9a1, -2em -2em 0 -1em #97d9a1;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em #97d9a1, 2em -2em 0 -1em #97d9a1, 3em 0 0 -1em #97d9a1, 2em 2em 0 -1em #97d9a1, 0 3em 0 0 #97d9a1, -2em 2em 0 0.2em #97d9a1, -3em 0 0 0 #97d9a1, -2em -2em 0 -1em #97d9a1;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em #fc9bcb, 2em -2em 0 -1em #fc9bcb, 3em 0em 0 -1em #fc9bcb, 2em 2em 0 -1em #fc9bcb, 0 3em 0 -1em #fc9bcb, -2em 2em 0 0 #fc9bcb, -3em 0em 0 0.2em #fc9bcb, -2em -2em 0 0 #fc9bcb;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0 #fc9bcb, 2em -2em 0 -1em #fc9bcb, 3em 0 0 -1em #fc9bcb, 2em 2em 0 -1em #fc9bcb, 0 3em 0 -1em #fc9bcb, -2em 2em 0 0 #fc9bcb, -3em 0em 0 0 #fc9bcb, -2em -2em 0 0.2em #fc9bcb;
+  }
+}
+@keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em #00a8db, 2em -2em 0 0em #00a8db, 3em 0 0 -1em #00a8db, 2em 2em 0 -1em #00a8db, 0 3em 0 -1em #00a8db, -2em 2em 0 -1em #00a8db, -3em 0 0 -1em #00a8db, -2em -2em 0 0 #00a8db;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0 #00a8db, 2em -2em 0 0.2em #00a8db, 3em 0 0 0 #00a8db, 2em 2em 0 -1em #00a8db, 0 3em 0 -1em #00a8db, -2em 2em 0 -1em #00a8db, -3em 0 0 -1em #00a8db, -2em -2em 0 -1em #00a8db;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em #787b8c, 2em -2em 0 0 #787b8c, 3em 0 0 0.2em #787b8c, 2em 2em 0 0 #787b8c, 0 3em 0 -1em #787b8c, -2em 2em 0 -1em #787b8c, -3em 0 0 -1em #787b8c, -2em -2em 0 -1em #787b8c;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em #787b8c, 2em -2em 0 -1em #787b8c, 3em 0em 0 0 #787b8c, 2em 2em 0 0.2em #787b8c, 0 3em 0 0em #787b8c, -2em 2em 0 -1em #787b8c, -3em 0em 0 -1em #787b8c, -2em -2em 0 -1em #787b8c;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em #97d9a1, 2em -2em 0 -1em #97d9a1, 3em 0 0 -1em #97d9a1, 2em 2em 0 0em #97d9a1, 0 3em 0 0.2em #97d9a1, -2em 2em 0 0 #97d9a1, -3em 0em 0 -1em #97d9a1, -2em -2em 0 -1em #97d9a1;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em #97d9a1, 2em -2em 0 -1em #97d9a1, 3em 0 0 -1em #97d9a1, 2em 2em 0 -1em #97d9a1, 0 3em 0 0 #97d9a1, -2em 2em 0 0.2em #97d9a1, -3em 0 0 0 #97d9a1, -2em -2em 0 -1em #97d9a1;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em #fc9bcb, 2em -2em 0 -1em #fc9bcb, 3em 0em 0 -1em #fc9bcb, 2em 2em 0 -1em #fc9bcb, 0 3em 0 -1em #fc9bcb, -2em 2em 0 0 #fc9bcb, -3em 0em 0 0.2em #fc9bcb, -2em -2em 0 0 #fc9bcb;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0 #fc9bcb, 2em -2em 0 -1em #fc9bcb, 3em 0 0 -1em #fc9bcb, 2em 2em 0 -1em #fc9bcb, 0 3em 0 -1em #fc9bcb, -2em 2em 0 0 #fc9bcb, -3em 0em 0 0 #fc9bcb, -2em -2em 0 0.2em #fc9bcb;
+  }
+}
+
+.profile, .profile-bar {
+  background-color: #212121;
+}
+
+.profile-bar .title {
+  font-family: Vermin;
+  color: #787b8c;
+  text-align: left;
+}
+
+.head {
+  text-align: center;
+  font-family: Vermin;
+  color: #787b8c;
+}
+
+.profile-button {
+  background-color: transparent;
+  border: 0;
+}
+
+button .head, span .head {
+
+}
+
+.profile-list ion-item{
+  background-color: transparent;
+}
+
+.popup-container .popup {
+  height: 40vh;
+  width: 40vw;
+  border-radius: 25px;
+}
+
+.popup-head {
+  background-color : black;
+  opacity: 0.7;
+}
+
+.popup-title {
+  font-family: Vermin;
+  font-weight: bold;
+  color: #787b8c;
+}
+
+.popup-body {
+  background-color : black;
+  opacity: 0.9;
+  height: 73%;
+}
+
+.popup-buttons {
+  background-color: black;
+  opacity: 0.7;
+}
+
+.end-stats li {
+  margin-top: 3%;
+  font-family: Vermin;
+  font-size: 1.5em;
+  opacity: 1;
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
+}
+
+.players {
+  margin-top: 5%;
+}
+
+.player {
+  vertical-align: center;
+  color: white;
+  font-weight: bold;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
+  font-size: 1.5em;
+  font-family: Vermin;
+}
+
+.player-button {
+  float: right;
+  font-size: 1.5em;
+  font-family: Vermin;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  background-color: #6C6D6E;
+}

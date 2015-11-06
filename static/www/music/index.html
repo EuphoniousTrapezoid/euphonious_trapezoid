@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+  <script src='./DroneElement.js'></script>
+  <script src='./Envelope.js'></script>
+  <script src='./WhiteNoise.js'></script>
+  <script src='./AnchorElement.js'></script>
+  <script src='./SequenceElement.js'></script>
+  <script src='./RemoveElement.js'></script>
+  <script src='./ShakeElement.js'></script>
+  <script src='./PutElement.js'></script>
+  <script src='./MoveElement.js'></script>
+  <script src='./FallElement.js'></script>
+  <script src='./OffElement.js'></script>
+  <script>
+  var context = new AudioContext( );
+  var elements = [];
+  elements.put = context.createPutElement( );
+  elements.sequence = context.createSequenceElement( );
+  elements.remove = context.createRemoveElement( );
+  elements.move = context.createMoveElement( );
+  elements.shake = context.createShakeElement( );
+  elements.fall = context.createFallElement( );
+  elements.off = context.createOffElement( );
+  elements.drone1 = context.createDroneElement( 55 );
+  elements.drone2 = context.createDroneElement( 58 );
+  elements.drone3 = context.createDroneElement( 62 );
+  var filter = context.createBiquadFilter( );
+  filter.type = 'lowpass';
+  filter.frequency = 100;
+  filter.connect( context.destination );
+  elements.put.connect( filter );
+  elements.sequence.connect( filter );
+  elements.remove.connect( filter );
+  elements.move.connect( filter );
+  elements.shake.connect( filter );
+  elements.fall.connect( filter );
+  elements.off.connect( filter );
+  elements.drone1.connect( filter );
+  elements.drone2.connect( filter );
+  elements.drone3.connect( filter );
+  // elements.drone1.start( context.currentTime );
+  // elements.drone2.start( context.currentTime );
+  // elements.drone3.start( context.currentTime );
+  for( var i = 0; i < 64; i++ ) {
+    var midiNote = 36 + ~~( Math.random( ) * 24 );
+    var valence = 1 + ~~( Math.random( ) * 8 );
+    elements.off.start( context.currentTime + i * 0.125, midiNote, valence );
+    // var choose = Math.random( );
+    //  if( choose < 0.7 ) {
+    //    elements.sequence.start( context.currentTime + i * 0.125, midiNote, valence );
+    //  } else if( choose < 0.8 ) {
+    //    elements.remove.start( context.currentTime + i * 0.125, midiNote, valence );
+    //  } else if( choose < 0.9 ) {
+    //    elements.move.start( context.currentTime + i * 0.125, midiNote, valence );
+    //  } else if( choose < 0.95 ) {
+    //    elements.put.start( context.currentTime + i * 0.125, midiNote, valence );
+    //  } else {
+    //    elements.fall.start( context.currentTime + i * 0.125, midiNote, valence );
+    //  }
+    //  if( i === 32 ) {
+    //   elements.drone1.rotate( 57, context.currentTime + i * 0.125 );
+    //   elements.drone2.rotate( 60, context.currentTime + i * 0.125 );
+    //   elements.drone3.rotate( 63, context.currentTime + i * 0.125 );
+    //  }
+  }
+  // elements.drone1.stop( context.currentTime + 32 * 0.125 );
+  // elements.drone2.stop( context.currentTime + 32 * 0.125 );
+  // elements.drone3.stop( context.currentTime + 32 * 0.125 );
+  </script>
+</body>

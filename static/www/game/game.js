@@ -746,7 +746,8 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     gradient.append("stop").attr("offset", "70%").attr("stop-color", "#011218");
 
     background = svg.append("rect").attr("width", "100%").attr("height", "100%")
-    .attr("id", "gradientBackground").attr("fill", "url(#gameGradient)");
+    // .attr("id", "gradientBackground").attr("fill", "url(#gameGradient)");
+    .attr( 'id', 'gradientBackground' ).attr( 'fill', 'black' );
 
     grid = svg.append("svg").attr("id", "grid");
     indicator = grid.append("circle").datum( {id: null} ).attr("r", anchorRadius).attr("cx", "50%").attr("cy", "50%")

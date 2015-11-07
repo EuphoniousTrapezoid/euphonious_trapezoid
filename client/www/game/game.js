@@ -122,7 +122,7 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     // Reassign the lowpass filter cutoff so
     // that it is proportional to the number of
     // spheres on the board.
-    var cutoff = 100 + data.length * 8;
+    var cutoff = 5000 + data.length * 20;
     lowpass.frequency.setTargetAtTime( cutoff, context.currentTime, 25 );
     return true;
   };
@@ -773,7 +773,7 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     tracks = {};
     lowpass = context.createBiquadFilter();
     lowpass.type = 'lowpass';
-    lowpass.frequency.value = 100;
+    lowpass.frequency.value = 5000;
     highpass = context.createBiquadFilter( );
     highpass.type = 'highpass';
     highpass.frequency.value = 50;

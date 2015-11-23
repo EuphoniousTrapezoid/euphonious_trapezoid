@@ -20,7 +20,6 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-dist/
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
@@ -29,6 +28,7 @@ node_modules/
 client/node_modules/
 server/bower_components/
 client/bower_components/
+
 
 client/www/lib/
 server/db/db.js

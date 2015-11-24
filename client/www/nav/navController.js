@@ -1,5 +1,5 @@
-sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'player', '$ionicPopup',
-  function($scope, $window, Auth, $state, player, $ionicPopup) {
+sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'player', '$ionicPopup', 'socket',
+  function($scope, $window, Auth, $state, player, $ionicPopup, socket) {
 
     $scope.loaded = false;
     $scope.loginStatus = false;
@@ -10,10 +10,20 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
     $scope.signupActive = false;
     $scope.pushIt = true;
 
+    $scope.activeUsers = {};
+    $scope.activeGame = null;
+    $scope.showUsers = false;
+
     $scope.single = function() {
       $state.go('profile.loading', {
         action: 'single'
       });
+    };
+
+    $scope.join = function(numPlayers) {
+
+      $state.go('profile.loading', { action: 'join', numPlayers: numPlayers });
+
     };
 
     $scope.play = function() {
@@ -101,21 +111,72 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
       }, 250);
     };
 
-    $scope.load = function() {
-      if ($window.localStorage.getItem('id_token')) {
-        Auth.loadAuth($window.localStorage.getItem('id_token'));
-        $scope.logoutStatus = false;
-        $scope.logoutStatusButtons = false;
-        $scope.loginStatus = true;
-        $scope.loaded = true;
-      } else {
-        $scope.loaded = true;
+
+// from host controller
+
+  $scope.toggleShowUsers = function() {
+    socket.emit('checkForUsers');
+    $scope.showUsers = !$scope.showUsers;
+
+  }
+
+  $scope.invite = function(username) {
+    if ($scope.activeUsers[username]) {
+      console.log("active game is at ", $scope.activeGame);
+      socket.emit('invite', {
+        socketID: $scope.activeUsers[username].socketID,
+        gameID: $scope.activeGame,
+        host: player.profile.userName
+      });
+
+    }
+  };
+
+  socket.on('started', function(data) {
+    console.log("did i get this event?");
+    player.playerNum = String(data.playerNum);
+    $state.go('profile.game');
+  });
+
+  socket.on('hosting', function(data) {
+    $scope.activeGame = data;
+    console.log("did i receive this event? ", $scope.activeGame);
+  });
+
+  socket.on('updateUsers', function(data) {
+    $scope.activeUsers = {};
+    for (var socket in data) {
+
+      if (data[socket].profile && data[socket].profile.userName !== 'anonymous') {
+        $scope.activeUsers[data[socket].profile.userName] = {
+          name: data[socket].profile.userName,
+          joined: data[socket].joined,
+          socketID: socket
+        };
       }
-    };
-    // will change the above auth check to be server-side later and integrate promises
+    }
+    console.log($scope.activeUsers);
+  });
 
-    $scope.load();
+  $scope.init = function() {
 
+    if ($window.localStorage.getItem('id_token')) {
+      Auth.loadAuth($window.localStorage.getItem('id_token'));
+      $scope.logoutStatus = false;
+      $scope.logoutStatusButtons = false;
+      $scope.loginStatus = true;
+      $scope.loaded = true;
+    } else {
+      $scope.loaded = true;
+    }
+
+    socket.emit('grabProfile', player.profile);
+
+    socket.emit('checkForUsers');
+    socket.emit('privateGame', player.profile);
+  };
+
+  $scope.init();
 
   }
 ]);

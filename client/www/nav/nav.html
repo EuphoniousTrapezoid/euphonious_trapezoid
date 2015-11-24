@@ -14,8 +14,12 @@
                 <button class="login-button" ng-click="single()">SOLO</button>
               </li>
               <li>
-                <button class="login-button" ui-sref="profile.launch">MULTIPLAYER</button>
+                <button class="login-button" ng-click="join(2)">TWO PLAYERS</button>
               </li>
+              <li>
+                <button class="login-button" ng-click="join(4)">FOUR PLAYERS</button>
+              </li>
+
             </ul>
           </div>
           <!-- display if NOT signed in -->
@@ -62,14 +66,16 @@
         <div class="outer-container">
           <div class="inner-container">
             <ul ng-if="loginStatus" class="nav-buttons animate-if">
+ 
               <li>
                 <!-- will alt these with gray -->
-                <button class="blueb animate-if" ng-class="" ng-click="logout()">Logout</button>
+                <button class="blueb animate-if" ng-class="">RULES</button>
               </li>
             </ul>
           </div>
         </div>
       </div>
+    <button id="bottom-button" ng-click="back()">Back</button>
     </ion-content>
   </div>
 </ion-view>

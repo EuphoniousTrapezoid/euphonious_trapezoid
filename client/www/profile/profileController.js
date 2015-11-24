@@ -25,6 +25,7 @@ sphero.controller('profileController', ['$scope', '$window', 'Auth', 'socket', '
     //When $rootScope sends triggerLeave event, socket connections emits leftGame
     //to remove socket connection from game instance
     $scope.$on('triggerLeave', function() {
+      console.log('triggerLeave triggered, leftGame event emitted')
       socket.emit('leftGame');
     });
 

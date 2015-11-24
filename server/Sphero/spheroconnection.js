@@ -50,36 +50,55 @@ var grabProfile = function(io, data) {
 
 var host = function(io, data) {
   // Create a unique Socket.IO Room
+  activeUsers[this.id].joined = false;
+
+  console.log('someone has called the host function');
+  console.log('here are the activeUsers:');
+  console.log(JSON.stringify(activeUsers));
+  console.log('gameQueue: ', JSON.stringify(gameQueue));
   if (!activeUsers[this.id].joined) {
     var gameId = (1 + Math.random() * 100000).toString();
 
+    var numPlayers = data.numPlayers;
+    var profile = data.profile;
     // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
     // Join the Room and wait for the players
-    activeUsers[this.id].profile = data;
+    activeUsers[this.id].profile = profile;
     activeUsers[this.id].joined = gameId;
 
     this.join(gameId);
 
-    gameQueue.push(gameId);
-
+    gameQueue.push({gameId: gameId, numPlayers:numPlayers});
     playersInRoom[gameId] = [];
-    playersInRoom[gameId].push([data, data.userName]);
+    playersInRoom[gameId].push([data.profile, data.profile.userName]);
+    console.log('new game is being hosted, and has been added to gameQueue');
+    console.log('gameQueue: ', JSON.stringify(gameQueue));
+
   }
 
 };
 
 var join = function(io, data) {
+  activeUsers[this.id].joined = false;
+
+  console.log('someone is trying to join');
+  console.log('here are the active users', JSON.stringify(activeUsers));
+
+  console.log('gameQueue: ', JSON.stringify(gameQueue));
   if (!activeUsers[this.id].joined) {
-    if (gameQueue[0]) {
+    if (gameQueue[0] && gameQueue[0].numPlayers === data.numPlayers) {
 
-      activeUsers[this.id].joined = gameQueue[0];
-      this.join(gameQueue[0]);
+      activeUsers[this.id].joined = gameQueue[0].gameId;
+      this.join(gameQueue[0].gameId);
 
-      playersInRoom[gameQueue[0]] = playersInRoom[gameQueue[0]] || [];
-      playersInRoom[gameQueue[0]].push([data, data.userName]);
+      playersInRoom[gameQueue[0].gameId] = playersInRoom[gameQueue[0].gameId] || [];
+      playersInRoom[gameQueue[0].gameId].push([data.profile, data.profile.userName]);
 
-      if(Object.keys(io.nsps['/'].adapter.rooms[gameQueue[0]]).length === 4) {
-        startGame(gameQueue.shift(), io);
+      console.log('here is the gameQueue: ', JSON.stringify(gameQueue));
+      console.log('playersInRoom[gameQueue[0].gameId]:', JSON.stringify(playersInRoom[gameQueue[0].gameId]) );
+      console.log("io.nsps['/'].adapter.rooms[gameQueue[0]]: ", JSON.stringify(io.nsps['/'].adapter.rooms[gameQueue[0]]) );
+      if(Object.keys(io.nsps['/'].adapter.rooms[gameQueue[0].gameId]).length === gameQueue[0].numPlayers) { //change 4 to maxPlayers
+        startGame(gameQueue.shift().gameId, io);
       }
     } else {
       host.call(this, io, data);
@@ -194,6 +213,7 @@ module.exports.init = function(io, socket) {
   activeUsers[socket.id] = true;
 
   socket.on('host', function(data){
+    console.log('someone is hosting!');
     host.call(socket, io, data);
   });
 
@@ -228,11 +248,17 @@ module.exports.init = function(io, socket) {
   //When client sends leftGame event check if activeUsers joined property has the gameID
   // and that the game instance exists.  If so, remove to socket connection from the room.
   socket.on('leftGame', function() {
+    console.log('someone is leaving a game');
+    console.log('activeUsers[this.id]: ', JSON.stringify(activeUsers[this.id]));
+    console.log("io.nsps['/'].adapter.rooms: ", io.nsps['/'].adapter.rooms);
     if (activeUsers[this.id].joined && io.nsps['/'].adapter.rooms[activeUsers[this.id].joined]) {
       this.leave(activeUsers[this.id].joined);
       this.removeAllListeners('insert');
       io.to(this.id).emit('leaveGame');
       activeUsers[this.id].joined = false;
+
+      console.log('the person left successfully');
+      console.log('activeUsers[this.id]: ', JSON.stringify(activeUsers[this.id]));
     }
   });
 

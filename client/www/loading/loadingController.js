@@ -3,6 +3,8 @@ sphero.controller('loadingController', ['$scope', '$state', '$stateParams', 'soc
 
 
   	var action = $stateParams.action;
+    var numPlayers = $stateParams.numPlayers;
+
     if (action === null) {
       $state.go('nav');
     } else if (action === 'single') {
@@ -11,9 +13,9 @@ sphero.controller('loadingController', ['$scope', '$state', '$stateParams', 'soc
     } else {
       game.gameInfo.isSingle = false;
       if (action === 'join') {
-        socket.emit('join', player.profile);
+        socket.emit('join', {profile: player.profile, numPlayers:numPlayers});
       } else if (action === 'host') {
-        socket.emit('host', player.profile);
+        socket.emit('host', {profile: player.profile, numPlayers:numPlayers});
       } else if (action === 'joinPrivate') {
         console.log($stateParams.gameID);
         socket.emit('joinPrivate', { profile: player.profile, gameID: $stateParams.gameID });

@@ -5,12 +5,23 @@
       <div class="inner-container">
         <ul class="launch-buttons">
           <li>
-            <button class="" ng-click="join()">Join</button>
+            <button class="login-button" ng-click="join(2)">Two-Player Game</button>
           </li>
           <li>
-            <button class="" ng-click="hostGame()">Host</button>
+            <button class="login-button" ng-click="join(3)">Three-Player Game</button>
+          </li>
+          <li>
+            <button class="login-button" ng-click="join(4)">Four-Player Game</button>
+          </li>
+          <li> 
+            <button class="login-button" ng-click="toggleShowUsers()">Invite a Friend</button>
           </li>
         </ul>
+
+        <ul class="user-list">
+          <li class="user" ng-show="showUsers" ng-repeat="user in activeUsers" ng-click="invite(user.name)"> {{ user.name }}</li>
+        </ul>
+
       </div>
     </div>
     <div id="animate">

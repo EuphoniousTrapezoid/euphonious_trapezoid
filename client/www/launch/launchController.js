@@ -1,9 +1,13 @@
 sphero.controller('launchController', ['$scope', '$state', 'player', 'socket', function($scope, $state, player, socket) {
 
+  $scope.activeUsers = {};
+  $scope.activeGame = null;
+  $scope.showUsers = false;
 
-	$scope.join = function() {
 
-		$state.go('profile.loading', { action: 'join' });
+	$scope.join = function(numPlayers) {
+
+		$state.go('profile.loading', { action: 'join', numPlayers: numPlayers });
 
   };
 
@@ -18,20 +22,10 @@ sphero.controller('launchController', ['$scope', '$state', 'player', 'socket', f
     Auth.destroyCredentials();
   };
 
-  $scope.hostGame = function() {
-
-    $state.go('profile.host');
-
-  };
-
-
-  $scope.init = function() {
-
-    socket.emit('grabProfile', player.profile);
+  $scope.hostGame = function(numPlayers) {
+    $state.go('profile.loading', { action: 'host', numPlayers: numPlayers });
 
   };
-
-  $scope.init();
 
   // animation ====================
 
@@ -169,5 +163,58 @@ sphero.controller('launchController', ['$scope', '$state', 'player', 'socket', f
   window.requestAnimationFrame(move2);
   window.requestAnimationFrame(move3);
 
+// from host controller
 
+  $scope.toggleShowUsers = function() {
+    socket.emit('checkForUsers');
+    $scope.showUsers = !$scope.showUsers;
+
+  }
+
+  $scope.invite = function(username) {
+    if ($scope.activeUsers[username]) {
+      console.log("active game is at ", $scope.activeGame);
+      socket.emit('invite', {
+        socketID: $scope.activeUsers[username].socketID,
+        gameID: $scope.activeGame,
+        host: player.profile.userName
+      });
+
+    }
+  };
+
+  socket.on('started', function(data) {
+    console.log("did i get this event?");
+    player.playerNum = String(data.playerNum);
+    $state.go('profile.game');
+  });
+
+  socket.on('hosting', function(data) {
+    $scope.activeGame = data;
+    console.log("did i receive this event? ", $scope.activeGame);
+  });
+
+  socket.on('updateUsers', function(data) {
+    $scope.activeUsers = {};
+    for (var socket in data) {
+
+      if (data[socket].profile && data[socket].profile.userName !== 'anonymous') {
+        $scope.activeUsers[data[socket].profile.userName] = {
+          name: data[socket].profile.userName,
+          joined: data[socket].joined,
+          socketID: socket
+        };
+      }
+    }
+    console.log($scope.activeUsers);
+  });
+
+  $scope.init = function() {
+    socket.emit('grabProfile', player.profile);
+
+    socket.emit('checkForUsers');
+    socket.emit('privateGame', player.profile);
+  };
+
+  $scope.init();
 }]);

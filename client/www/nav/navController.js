@@ -26,6 +26,10 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
 
     };
 
+    $scope.rules = function () {
+      $state.go('rules');
+    }
+
     $scope.play = function() {
       var anonPlayer = Auth.playAnon();
       Auth.login(anonPlayer.username, anonPlayer.password)

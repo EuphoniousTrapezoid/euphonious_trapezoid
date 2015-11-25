@@ -115,37 +115,34 @@ sphero.controller('rulesController', ['$scope', '$state',
           var cartesianY = parseInt(rotatingCircle.attr('cy')) - 110;
           var oldCartesianX;
 
-          for (var rotationNumber = 0; rotationNumber < arguments.length; rotationNumber ++) {
-            var angle = Math.abs( arguments[rotationNumber].angle );
 
-            for ( var i = 0; i <= clockwiseAngle; i += clockwiseResolution ) {
-              rotatingCircle = rotatingCircle.transition().duration( clockwiseDuration/clockwiseSteps ).ease('linear')
-                        .attr("cx", function () {
-                          oldCartesianX = cartesianX;
-                          cartesianX = cartesianX * Math.cos(clockwiseResolution) - cartesianY * Math.sin(clockwiseResolution);
-                          return String(cartesianX + 150) + 'px';
-                        })
-                        .attr("cy", function (d) {
-                            cartesianY = oldCartesianX * Math.sin(clockwiseResolution) + cartesianY * Math.cos(clockwiseResolution);
-                            return String(cartesianY + 80) + 'px';
-                        });
-              }
-              
-            for (var i = 0; i >= antiClockwiseAngle; i+= antiClockwiseResolution) {
-
-              rotatingCircle = rotatingCircle.transition().duration( antiClockwiseDuration/antiClockwiseSteps ).ease('linear')
-                        .attr("cx", function() {
-                          oldCartesianX = cartesianX;
-                          cartesianX = cartesianX * Math.cos(antiClockwiseResolution) - cartesianY * Math.sin(antiClockwiseResolution);
-                          return String(cartesianX + 150) + 'px';
-                        })
-                        .attr("cy", function () {
-                          cartesianY = oldCartesianX * Math.sin(antiClockwiseResolution) + cartesianY * Math.cos(antiClockwiseResolution);
+          for ( var i = 0; i <= clockwiseAngle; i += clockwiseResolution ) {
+            rotatingCircle = rotatingCircle.transition().duration( clockwiseDuration/clockwiseSteps ).ease('linear')
+                      .attr("cx", function () {
+                        oldCartesianX = cartesianX;
+                        cartesianX = cartesianX * Math.cos(clockwiseResolution) - cartesianY * Math.sin(clockwiseResolution);
+                        return String(cartesianX + 150) + 'px';
+                      })
+                      .attr("cy", function (d) {
+                          cartesianY = oldCartesianX * Math.sin(clockwiseResolution) + cartesianY * Math.cos(clockwiseResolution);
                           return String(cartesianY + 80) + 'px';
-                        });
+                      });
             }
+            
+          for (var i = 0; i >= antiClockwiseAngle; i+= antiClockwiseResolution) {
 
+            rotatingCircle = rotatingCircle.transition().duration( antiClockwiseDuration/antiClockwiseSteps ).ease('linear')
+                      .attr("cx", function() {
+                        oldCartesianX = cartesianX;
+                        cartesianX = cartesianX * Math.cos(antiClockwiseResolution) - cartesianY * Math.sin(antiClockwiseResolution);
+                        return String(cartesianX + 150) + 'px';
+                      })
+                      .attr("cy", function () {
+                        cartesianY = oldCartesianX * Math.sin(antiClockwiseResolution) + cartesianY * Math.cos(antiClockwiseResolution);
+                        return String(cartesianY + 80) + 'px';
+                      });
           }
+
 
 
         };

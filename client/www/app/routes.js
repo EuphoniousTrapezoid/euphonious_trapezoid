@@ -18,8 +18,7 @@ router.config(function($stateProvider, $urlRouterProvider) {
     .state('rules', {
       url: '/rules',
       templateUrl: 'nav/rules.html',
-      controller: 'rulesController',
-      cache:false
+      controller: 'rulesController'
     })
     .state('profile', {
       url: '/profile',

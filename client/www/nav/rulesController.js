@@ -54,11 +54,34 @@ sphero.controller('rulesController', ['$scope', '$state',
 
     var animateRotate = function () {
       var suspended = d3.selectAll('circle.suspend');
-      var rotated = d3.selectAll('circle.rotate');
+      var rotated = d3.select('g.rotate');
+      var duration = 125
+
+      var rotate = function () {
+        rotated
+        .transition()
+        .duration(duration*0.65)
+        .ease('linear')
+        .attr('transform',  'rotate(-121)')
+        .transition()
+        .duration(duration*0.35)
+        .ease('linear')
+        .attr('transform', 'rotate(-90)')
+        .transition()
+        .duration(duration * 15) // 16 durations up to this point in the rotation
+        .transition()
+        .duration(duration*4)
+        .attr('transform', 'rotate(0)')
+
+        .transition()
+        .duration(duration*8)
+        .each('end', rotate);
+      }
+
+      rotate();
 
       suspended.each( function (d,i) {
         var circle = this;
-        var duration = 125;
 
         var suspend = function () {
           d3.select(circle)
@@ -71,97 +94,51 @@ sphero.controller('rulesController', ['$scope', '$state',
           .ease("sin")
           .attr("r", '11px')
           .transition()
-          .duration(duration * 1.2)
+          .duration(duration)
           .each('end', fall);
         };
 
         var fall = function () {
           var falling = d3.select(circle);
-          var moveTo = parseInt(falling.attr('cx')) - 60;
 
           falling
           .transition()
           .duration( duration )
           .ease("elastic")
-          .attr("cx", moveTo + 'px')
-          .attr("r", '13px');          
+          .attr("transform", 'translate(-60)')
+          .attr("r", '13px')
+          .transition() // total of 3 + .1 durations up to this point 
+          .duration(duration * 12.9) // 16 durations === 2 sec
+          .each('end', moveBack);
         };
+
+        var moveBack = function () {
+          console.log('moving back');
+          var movingBack = d3.select(circle);
+          // var goBackTo = parseInt(movingBack.attr('cx')+90);
+
+          movingBack
+          .transition()
+          .duration(duration*4)
+          .attr('transform', 'translate(0)') // 20 durations up to this point
+          .transition() // 
+          .duration(duration*8) // takes 24 durations total i.e. 3 sec
+          .each('end', suspend);
+
+        }
 
         d3.select(circle)
         .transition()
-        .delay(1000 + i * duration*1.1)
+        .delay(i * duration*1.1)
         .each('start', suspend);
       });
 
-      rotated.each( function (d,i) {
-        var circle = this;
-        var duration = 125;
-
-        var antiClockwiseAngle = (Math.PI/2) * -1.35;
-        var antiClockwiseSteps = 90 * 1.25;
-        var antiClockwiseResolution = antiClockwiseAngle/antiClockwiseSteps;
-        var antiClockwiseDuration = duration * .65;
-
-        var clockwiseAngle = Math.PI/2 * .35;
-        var clockwiseSteps = 90 * .25;
-        var clockwiseResolution = clockwiseAngle/clockwiseSteps;
-        var clockwiseDuration = duration * .35;
-
-
-        var rotate = function () {
-          
-          var rotatingCircle = d3.select(circle);
-          var cartesianX = parseInt(rotatingCircle.attr('cx')) - 180;
-          var cartesianY = parseInt(rotatingCircle.attr('cy')) - 110;
-          var oldCartesianX;
-
-
-          for ( var i = 0; i <= clockwiseAngle; i += clockwiseResolution ) {
-            rotatingCircle = rotatingCircle.transition().duration( clockwiseDuration/clockwiseSteps ).ease('linear')
-                      .attr("cx", function () {
-                        oldCartesianX = cartesianX;
-                        cartesianX = cartesianX * Math.cos(clockwiseResolution) - cartesianY * Math.sin(clockwiseResolution);
-                        return String(cartesianX + 150) + 'px';
-                      })
-                      .attr("cy", function (d) {
-                          cartesianY = oldCartesianX * Math.sin(clockwiseResolution) + cartesianY * Math.cos(clockwiseResolution);
-                          return String(cartesianY + 80) + 'px';
-                      });
-            }
-            
-          for (var i = 0; i >= antiClockwiseAngle; i+= antiClockwiseResolution) {
-
-            rotatingCircle = rotatingCircle.transition().duration( antiClockwiseDuration/antiClockwiseSteps ).ease('linear')
-                      .attr("cx", function() {
-                        oldCartesianX = cartesianX;
-                        cartesianX = cartesianX * Math.cos(antiClockwiseResolution) - cartesianY * Math.sin(antiClockwiseResolution);
-                        return String(cartesianX + 150) + 'px';
-                      })
-                      .attr("cy", function () {
-                        cartesianY = oldCartesianX * Math.sin(antiClockwiseResolution) + cartesianY * Math.cos(antiClockwiseResolution);
-                        return String(cartesianY + 80) + 'px';
-                      });
-          }
-
-
-
-        };
-
-    
-        d3.select(circle)
-        .transition()
-        .delay(1000)
-        .each('start', rotate.bind(this, 'test'));
-
-
-      });
 
     };
 
     $scope.$on('$ionicView.enter', function () {
-
       animateRemoved();
-     animateRotate();
+      animateRotate();
     })
     /*
       duration = 125;

@@ -105,7 +105,9 @@ body, .blue {
 .spacer {
     display: block;
     width: 100%;
-    height: 275px;
+
+    /*height: 275px;*/
+
     text-align: center;
     vertical-align: middle;
 }

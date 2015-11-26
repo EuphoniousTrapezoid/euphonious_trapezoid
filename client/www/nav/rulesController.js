@@ -74,7 +74,7 @@ sphero.controller('rulesController', ['$scope', '$state',
         .attr('transform', 'rotate(0)')
 
         .transition()
-        .duration(duration*8)
+        .duration(duration*12)
         .each('end', rotate);
       }
 
@@ -122,7 +122,7 @@ sphero.controller('rulesController', ['$scope', '$state',
           .duration(duration*4)
           .attr('transform', 'translate(0)') // 20 durations up to this point
           .transition() // 
-          .duration(duration*8) // takes 24 durations total i.e. 3 sec
+          .duration(duration*12) // takes 24 durations total i.e. 3 sec
           .each('end', suspend);
 
         }

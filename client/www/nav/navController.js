@@ -27,7 +27,11 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
     };
 
     $scope.rules = function () {
-      $state.go('rules');
+      angular.element(document.querySelector('#gameModes')).addClass('fadeOut');
+      setTimeout(function() {
+
+        $state.go('rules');
+      },500);
     }
 
     $scope.play = function() {
@@ -112,7 +116,7 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
       setTimeout(function() {
         $scope.logoutStatus = true;
         $scope.logoutStatusButtons = true;
-      }, 250);
+      }, 500);
     };
 
 
@@ -159,7 +163,6 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
         };
       }
     }
-    console.log($scope.activeUsers);
   });
 
   $scope.init = function() {

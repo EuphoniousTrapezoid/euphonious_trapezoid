@@ -1,5 +1,10 @@
 /* Empty. Add your own CSS if you like */
-
+.hidden {
+  display: none;
+}
+.show {
+  display:block;
+}
 @font-face {
     font-family: Vermin;
     src: url("vermin-vibes-2-edm-xtc/Vermin Vibes 2 EDM XTC.otf") format("opentype");
@@ -15,7 +20,7 @@ body {
 
 }
 
-#nav {
+#nav,#rules {
     background-color: black;
 }
 
@@ -93,13 +98,14 @@ body, .blue {
     background-color: black;
 }
 
-#spacer-wrapper {
+.spacer-wrapper {
     display: block;
-    width: 100%;
-    height: 275px;
-    text-align: center;
-    line-height: 275px;
-    vertical-align: middle;
+    max-width:350px;
+    margin:auto;
+
+/*    height: 275px;
+*/
+
 }
 
 .spacer {

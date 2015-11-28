@@ -10,8 +10,10 @@ sphero.controller('loadingController', ['$scope', '$state', '$stateParams', 'soc
     } else if (action === 'single') {
       socket.emit('single', player.profile);
       game.gameInfo.isSingle = true;
+      $scope.isSingle = true;
     } else {
       game.gameInfo.isSingle = false;
+      $scope.isSingle = false;
       if (action === 'join') {
         socket.emit('join', {profile: player.profile, numPlayers:numPlayers});
       } else if (action === 'host') {

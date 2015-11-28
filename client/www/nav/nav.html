@@ -1,4 +1,4 @@
-<ion-view title="nav" id="nav">
+<ion-view title="nav" id="nav" class="animated">
   <div id="nav-view">
     <ion-content padding="true">
       <div class="spacer" style="width: 300px; height: 10px;"></div>
@@ -8,21 +8,7 @@
       <div ng-if="loaded">
         <!-- display if signed in -->
         <div class="spacer-wrapper">
-          <div ng-if="loginStatus" class="spacer animate-if">
-            <ul>
-              <li>
-                <button class="login-button" ng-click="single()">SOLO</button>
-              </li>
-              <li>
-                <button class="login-button" ng-click="join(2)">TWO PLAYERS</button>
-              </li>
 
-              <li>
-                <button class="login-button" ng-click="join(4)">FOUR PLAYERS</button>
-              </li>
-
-            </ul>
-          </div>
           <!-- display if NOT signed in -->
           <div ng-if="logoutStatus" class="spacer">
             <form ng-if="loginActive" id="log-list" class="list animate-if">
@@ -45,6 +31,22 @@
               </label>
             </form>
           </div>
+          <div id="gameModes" ng-if="loginStatus" class="spacer animate-if animated fadeIn">
+            <ul>
+              <li>
+                <button class="login-button" ng-click="single()">SOLO</button>
+              </li>
+              <li>
+                <button class="login-button" ng-click="join(2)">TWO PLAYERS</button>
+              </li>
+
+              <li>
+                <button class="login-button" ng-click="join(4)">FOUR PLAYERS</button>
+              </li>
+
+            </ul>
+          </div>
+
         </div>
         <!-- display if not logged in, selected lights up and controls form -->
         <div class="outer-container">

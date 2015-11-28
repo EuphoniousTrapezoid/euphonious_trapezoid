@@ -2,7 +2,12 @@ sphero.controller('rulesController', ['$scope', '$state',
   function($scope, $state) {
 
     $scope.nav = function () {
-      $state.go('nav');
+      angular.element(document.querySelector('#rules')).addClass('fadeOut');
+      setTimeout(function() {
+
+        $state.go('nav');
+      },500);
+
     }
 
 

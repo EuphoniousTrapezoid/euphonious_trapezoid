@@ -1,30 +1,30 @@
-<ion-view title="nav" id="nav">
+<ion-view title="rules" id="nav">
   <div id="nav-view">
-    <ion-content padding="true">
+    <ion-content padding="true" overflow-scroll="true">
       <div class="spacer" style="width: 300px; height: 10px;"></div>
       <h1 class="nav-title">
       <span class="blue">S</span><span class="gray">P</span><span class="green">H</span><span class="pink">E</span><span class="gray">R</span><span class="blue">O</span>
       </h1>
         <!-- display if signed in -->
-        <div class="spacer-wrapper rules">
-        <p>
-          You start the game with a centered dot called 'the anchor.'
-          <svg width="300px" height="60px">
-            <circle cx="150px" cy="25px" r="13px" fill='#8c3e65'></circle>
-          </svg>
-        </p>
-        <p>
-          You can place dots in any of the four cardinal directions next to the anchor or any previously placed dots.
-          <svg width="300px" height="90px">
-            <circle cx="180px" cy="25px" r="13px" fill='#fc9bcb'></circle>    
-            <circle cx="120px" cy="55px" r="13px" fill='#fc9bcb'></circle>
+        <div id="rules" class="spacer-wrapper animated fadeIn">
+          <p>
+            You start the game with a centered dot called 'the anchor.'
+            <svg width="300px" height="60px">
+              <circle cx="150px" cy="25px" r="13px" fill='#8c3e65'></circle>
+            </svg>
+          </p>
+          <p>
+            You can place dots in any of the four cardinal directions next to the anchor or any previously placed dots.
+            <svg width="300px" height="90px">
+              <circle cx="180px" cy="25px" r="13px" fill='#fc9bcb'></circle>    
+              <circle cx="120px" cy="55px" r="13px" fill='#fc9bcb'></circle>
 
-            <circle cx="150px" cy="55px" r="13px" fill='#8c3e65'></circle>
-            
-            <circle cx="180px" cy="55px" r="13px" fill='#fc9bcb'></circle>        
+              <circle cx="150px" cy="55px" r="13px" fill='#8c3e65'></circle>
+              
+              <circle cx="180px" cy="55px" r="13px" fill='#fc9bcb'></circle>        
 
-          </svg>
-        </p>
+            </svg>
+          </p>
         <p>
         If four or more dots of the same color are next to each other in any of the four cardinal directions, they disappear.
         <svg width="300px" height="90px" class="remove">
@@ -91,19 +91,20 @@
         <p>
         In solo mode, the goal is to experiment. Click on the anchor to change colors. Listen to the strange music emanating from the COSMIC SPHERES....
         </p>
+        <br>
         </div>
-        <!-- display if signed in -->
-        <div class="outer-container">
-          <div class="inner-container">
-            <ul class="nav-buttons animate-if">
- 
-              <li>
-                <!-- will alt these with gray -->
-                <button class="blueb animate-if" ng-class="" ng-click='nav()'>OK LET'S PLAY</button>
-              </li>
-            </ul>
+          <!-- display if signed in -->
+          <div class="outer-container">
+            <div class="inner-container">
+              <ul class="nav-buttons animate-if">
+   
+                <li>
+                  <!-- will alt these with gray -->
+                  <button class="blueb animate-if" ng-class="" ng-click='nav()'>OK LET'S PLAY</button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
     </ion-content>
   </div>

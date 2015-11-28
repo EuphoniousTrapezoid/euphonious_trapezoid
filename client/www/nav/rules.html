@@ -1,12 +1,11 @@
 <ion-view title="rules" id="nav">
   <div id="nav-view">
     <ion-content padding="true" overflow-scroll="true">
-      <div class="spacer" style="width: 300px; height: 10px;"></div>
       <h1 class="nav-title">
       <span class="blue">S</span><span class="gray">P</span><span class="green">H</span><span class="pink">E</span><span class="gray">R</span><span class="blue">O</span>
       </h1>
         <!-- display if signed in -->
-        <div id="rules" class="spacer-wrapper animated fadeIn">
+        <div id="rules" class="animated fadeIn">
           <p>
             You start the game with a centered dot called 'the anchor.'
             <svg width="300px" height="60px">
@@ -25,73 +24,71 @@
 
             </svg>
           </p>
-        <p>
-        If four or more dots of the same color are next to each other in any of the four cardinal directions, they disappear.
-        <svg width="300px" height="90px" class="remove">
-          <circle cx="150px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>          
-          <circle cx="180px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>    
-          <circle cx="120px" cy="50px" r="13px" fill='#fc9bcb' class="remove"></circle>
 
-          <circle cx="150px" cy="50px" r="13px" fill='#8c3e65'></circle>
-          
-          <circle cx="180px" cy="50px" r="13px" fill='#fc9bcb' class="remove"></circle>        
-          <circle cx="120px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>          
-        </svg>
-        </p>
-        <p>
-        Each dot is has a certain 'valence,' representing the minimum number of horizontal and vertical steps from the anchor to that dot. If the valence of the dot with the highest valence on the screen is greater by 4 or more than the valence of the dot with the lowest valence of the screen that is only connected to one other dot (or greater than 4, if there are any empty spots left next to the anchor), the game state becomes 'unbalanced.' Here is an example of an unbalanced state.
+          <p>
+          If four or more dots of the same color are next to each other in any of the four cardinal directions, they disappear.
+          <svg width="300px" height="90px" class="remove">
+            <circle cx="150px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>          
+            <circle cx="180px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>    
+            <circle cx="120px" cy="50px" r="13px" fill='#fc9bcb' class="remove"></circle>
 
+            <circle cx="150px" cy="50px" r="13px" fill='#8c3e65'></circle>
+            
+            <circle cx="180px" cy="50px" r="13px" fill='#fc9bcb' class="remove"></circle>        
+            <circle cx="120px" cy="20px" r="13px" fill='#fc9bcb' class="remove"></circle>          
+          </svg>
+          </p>
+          <p>
+          Each dot is has a certain 'valence,' representing the minimum number of horizontal and vertical steps from the anchor to that dot. If the valence of the dot with the highest valence on the screen is greater by 4 or more than the valence of the dot with the lowest valence of the screen that is only connected to one other dot (or greater than 4, if there are any empty spots left next to the anchor), the game state becomes 'unbalanced.' Here is an example of an unbalanced state.
+          <svg width="315px" height="180px">
+            <circle cx="150px" cy="110px" r="13px" fill='#8c3e65'></circle>
+            <g transform="translate(150,110)">
+                <circle cx="0" cy="-60px" r="13px" fill='#fc9bcb'></circle>          
+                <circle cx="0" cy="-30px" r="13px" fill='#97d9a1'></circle>
 
-        <svg width="315px" height="180px">
-          <circle cx="150px" cy="110px" r="13px" fill='#8c3e65'></circle>
-          <g transform="translate(150,110)">
-              <circle cx="0" cy="-60px" r="13px" fill='#fc9bcb'></circle>          
-              <circle cx="0" cy="-30px" r="13px" fill='#97d9a1'></circle>
-
-              <circle cx="-30px" cy="0" r="13px" fill='#fc9bcb'></circle>
-              
-              <circle cx="30px" cy="0" r="13px" fill='#fc9bcb'></circle>
-              <circle cx="60px" cy="0" r="13px" fill='#fc9bcb'></circle>
-              <circle cx="90px" cy="0" r="13px" fill='#fc9bcb'></circle>
-              
-              <circle cx="0" cy="30px" r="13px" fill='#97d9a1'></circle>
-          </g>
-          <circle cx="270px" cy="110px" r="13px" fill='#97d9a1'></circle>
-          <circle cx="300px" cy="110px" r="13px" fill='#97d9a1'></circle>
-        </svg>
-
-        </p>
-        <p>
-        When this happens, the dots rotate and the game rebalances itself!
-        <svg width="315px" height="180px">
-          <circle cx="150px" cy="110px" r="13px" fill='#8c3e65'></circle>
-          <g transform="translate(150,110)">
-            <g class="rotate">
-              <circle cx="0" cy="-60px" r="13px" fill='#fc9bcb' class="rotate"></circle>          
-              <circle cx="0" cy="-30px" r="13px" fill='#97d9a1' class="rotate"></circle>
-
-              <circle cx="-30px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
-              
-              <circle cx="30px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
-              <circle cx="60px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
-              <circle cx="90px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
-              
-              <circle cx="0" cy="30px" r="13px" fill='#97d9a1' class="rotate"></circle>
+                <circle cx="-30px" cy="0" r="13px" fill='#fc9bcb'></circle>
+                
+                <circle cx="30px" cy="0" r="13px" fill='#fc9bcb'></circle>
+                <circle cx="60px" cy="0" r="13px" fill='#fc9bcb'></circle>
+                <circle cx="90px" cy="0" r="13px" fill='#fc9bcb'></circle>
+                
+                <circle cx="0" cy="30px" r="13px" fill='#97d9a1'></circle>
             </g>
-          </g>
-          <circle cx="270px" cy="110px" r="13px" fill='#97d9a1' class="suspend"></circle>
-          <circle cx="300px" cy="110px" r="13px" fill='#97d9a1' class="suspend"></circle>
-        </svg>
+            <circle cx="270px" cy="110px" r="13px" fill='#97d9a1'></circle>
+            <circle cx="300px" cy="110px" r="13px" fill='#97d9a1'></circle>
+          </svg>
+          </p>
 
+          <p>
+          When this happens, the dots rotate and the game rebalances itself!
+          <svg width="315px" height="180px">
+            <circle cx="150px" cy="110px" r="13px" fill='#8c3e65'></circle>
+            <g transform="translate(150,110)">
+              <g class="rotate">
+                <circle cx="0" cy="-60px" r="13px" fill='#fc9bcb' class="rotate"></circle>          
+                <circle cx="0" cy="-30px" r="13px" fill='#97d9a1' class="rotate"></circle>
 
-        </p>
-        <p>
-        In multiplayer, the game ends when at least one of the dots on the board is touching the border. You'll need your opponents' help to reach the border--but if you have more dots than they do when the game ends, you win.
-        </p>
-        <p>
-        In solo mode, the goal is to experiment. Click on the anchor to change colors. Listen to the strange music emanating from the COSMIC SPHERES....
-        </p>
-        <br>
+                <circle cx="-30px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
+                
+                <circle cx="30px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
+                <circle cx="60px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
+                <circle cx="90px" cy="0" r="13px" fill='#fc9bcb' class="rotate"></circle>
+                
+                <circle cx="0" cy="30px" r="13px" fill='#97d9a1' class="rotate"></circle>
+              </g>
+            </g>
+            <circle cx="270px" cy="110px" r="13px" fill='#97d9a1' class="suspend"></circle>
+            <circle cx="300px" cy="110px" r="13px" fill='#97d9a1' class="suspend"></circle>
+          </svg>
+          </p>
+
+          <p>
+          In multiplayer, the game ends when at least one of the dots on the board is touching the border. You'll need your opponents' help to reach the border--but if you have more dots than they do when the game ends, you win.
+          </p>
+          <p>
+          In solo mode, the goal is to experiment. Click on the anchor to change colors. Listen to the strange music emanating from the COSMIC SPHERES....
+          </p>
+          <br>
         </div>
           <!-- display if signed in -->
           <div class="outer-container">
@@ -100,7 +97,7 @@
    
                 <li>
                   <!-- will alt these with gray -->
-                  <button class="blueb animate-if" ng-class="" ng-click='nav()'>OK LET'S PLAY</button>
+                  <button class="blueb animate-if" ng-class="" ng-click='launch()'>OK LET'S PLAY</button>
                 </li>
               </ul>
             </div>

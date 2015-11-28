@@ -6,7 +6,7 @@ sphero.controller('loadingController', ['$scope', '$state', '$stateParams', 'soc
     var numPlayers = $stateParams.numPlayers;
 
     if (action === null) {
-      $state.go('nav');
+      $state.go('profile.launch');
     } else if (action === 'single') {
       socket.emit('single', player.profile);
       game.gameInfo.isSingle = true;

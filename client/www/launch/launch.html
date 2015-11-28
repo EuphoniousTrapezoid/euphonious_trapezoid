@@ -1,31 +1,43 @@
-<ion-view title="launch" id="launch">
-  <ion-content padding="true">
-    <div class="spacer" style="width: 100%; height: 3em;"></div>
-    <div class="outer-container">
-      <div class="inner-container">
-        <ul class="launch-buttons">
-          <li>
-            <button class="login-button" ng-click="join(2)">Two-Player Game</button>
-          </li>
-          <li>
-            <button class="login-button" ng-click="join(3)">Three-Player Game</button>
-          </li>
-          <li>
-            <button class="login-button" ng-click="join(4)">Four-Player Game</button>
-          </li>
-          <li> 
-            <button class="login-button" ng-click="toggleShowUsers()">Invite a Friend</button>
-          </li>
-        </ul>
+<ion-view title="launch" id="nav">
+  <div id="nav-view">
+    <ion-content padding="true">
+      <h1 class="nav-title">
+      <span class="blue">S</span><span class="gray">P</span><span class="green">H</span><span class="pink">E</span><span class="gray">R</span><span class="blue">O</span>
+      </h1>
+      <div>
+        <!-- display if signed in -->
+        <div class="spacer-wrapper">
 
-        <ul class="user-list">
-          <li class="user" ng-show="showUsers" ng-repeat="user in activeUsers" ng-click="invite(user.name)"> {{ user.name }}</li>
-        </ul>
+          <div id="gameModes"  class="spacer animated fadeIn">
+            <ul>
+              <li>
+                <button class="login-button" ng-click="single()">SOLO</button>
+              </li>
+              <li>
+                <button class="login-button" ng-click="join(2)">TWO PLAYERS</button>
+              </li>
 
+              <li>
+                <button class="login-button" ng-click="join(4)">FOUR PLAYERS</button>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <!-- display if signed in -->
+        <div class="outer-container">
+          <div class="inner-container">
+            <ul class="nav-buttons animate-if">
+ 
+              <li>
+                <!-- will alt these with gray -->
+                <button class="blueb animate-if" ng-class="" ng-click="rules()">RULES</button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="animate">
-    </div>
-    <button id="bottom-button" ng-click="back()">Back</button>
-  </ion-content>
+    <button id="bottom-button" ng-click="logout()">Log Out</button>
+    </ion-content>
+  </div>
 </ion-view>

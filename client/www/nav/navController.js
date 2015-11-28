@@ -1,38 +1,13 @@
 sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'player', '$ionicPopup', 'socket',
   function($scope, $window, Auth, $state, player, $ionicPopup, socket) {
 
-    $scope.loaded = false;
-    $scope.loginStatus = false;
-    $scope.logoutStatus = true;
-    $scope.logoutStatusButtons = true;
-    $scope.playActive = false;
     $scope.loginActive = true;
     $scope.signupActive = false;
-    $scope.pushIt = true;
+    $scope.welcomeActive = false;
 
-    $scope.activeUsers = {};
-    $scope.activeGame = null;
-    $scope.showUsers = false;
+    $scope.loggedIn = false;
 
-    $scope.single = function() {
-      $state.go('profile.loading', {
-        action: 'single'
-      });
-    };
-
-    $scope.join = function(numPlayers) {
-
-      $state.go('profile.loading', { action: 'join', numPlayers: numPlayers });
-
-    };
-
-    $scope.rules = function () {
-      angular.element(document.querySelector('#gameModes')).addClass('fadeOut');
-      setTimeout(function() {
-
-        $state.go('rules');
-      },500);
-    }
+    $scope.signUpMessage = "";
 
     $scope.play = function() {
       var anonPlayer = Auth.playAnon();
@@ -41,14 +16,13 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
           if (user) {
             player.profile = user.profile;
             $window.localStorage.setItem('id_token', user.token);
-            var isAuth = Auth.checkAuth();
+
+            angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
             setTimeout(function() {
-              $scope.logoutStatus = !isAuth;
-            }, 25);
-            $scope.logoutStatusButtons = !isAuth;
-            setTimeout(function() {
-              $scope.loginStatus = isAuth;
-            }, 150);
+
+              $state.go('profile.launch');
+            },500);
+
           } else {
             alert('Invalid login, please login or signup');
           }
@@ -58,132 +32,107 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
     $scope.signUp = function(username, password, email) {
       if ($scope.signupActive === false) {
         $scope.loginActive = false;
+        $scope.welcomeActive = false;
         setTimeout(function() {
             $scope.signupActive = true;
-          },
-          1);
+          }, 1);
         return null;
       }
 
+      // else, if $scope.signupActive === true
       if (username && password && email) {
         console.log("username: ", username, "password: ", password, "email: ", email);
         Auth.signUp(username, password, email)
-          .then(function() {
-            $scope.pushIt = false;
-            $scope.login(username, password);
+          .then(function (resp) {
+            Auth.login(username, password)
+              .then(function(user) {
+                player.profile = user.profile;
+                $window.localStorage.setItem('id_token', user.token);
+
+                $scope.signUpMessage = 'Welcome ' + username;
+                $scope.signupActive = false;
+                setTimeout(function () {
+                  $scope.loggedIn = true;
+                  $scope.welcomeActive = true;
+                }, 1);
+              });
+
+            // $scope.login(username, password);
           }, function(err) {
             console.log(err);
-            //handle error
+            console.log('an error')
+            if(err.data === 'username already taken') {
+              $scope.signUpMessage = 'Username ' + username + ' already exists try again'
+              $scope.signupActive = false;
+              setTimeout(function () {
+                $scope.welcomeActive = true;
+              }, 1);
+            }
           });
       }
     };
 
 
     $scope.login = function(username, password) {
-      if (!$scope.loginActive && $scope.pushIt) {
+      if (!$scope.loginActive) {
         $scope.signupActive = false;
         setTimeout(function() {
             $scope.loginActive = true;
           },
           1);
         return null;
+      } else if (window.localStorage.id_token) {
+          angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
+          console.log('player profile launching: ', player.profile);
+
+          setTimeout(function() {
+            $state.go('profile.launch');
+          },500);
+
+      } else {
+        if (username && password) {
+          Auth.login(username, password)
+            .then(function(user) {
+              if (user) {
+                player.profile = user.profile;
+                $window.localStorage.setItem('id_token', user.token);
+                angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
+                setTimeout(function() {
+                  $state.go('profile.launch');
+                },500);
+
+              } else {
+                //alert('Invalid login, please login or signup');
+              }
+            });
+        }
       }
-      console.log(username, password);
-      if ($scope.loginActive && username && password) {
-        Auth.login(username, password)
-          .then(function(user) {
-            if (user) {
-              player.profile = user.profile;
-              $window.localStorage.setItem('id_token', user.token);
-              var isAuth = Auth.checkAuth();
-              $scope.logoutStatusButtons = !isAuth;
-              setTimeout(function() {
-                $scope.logoutStatus = !isAuth;
-              }, 25);
-              setTimeout(function() {
-                $scope.loginStatus = isAuth;
-              }, 150);
-            } else {
-              //alert('Invalid login, please login or signup');
-            }
-          });
-      }
+
     };
 
-    $scope.logout = function() {
-      Auth.destroyCredentials();
-      $scope.loginStatus = false;
+    $scope.logout = function () {
+      $scope.welcomeActive = false;
+      $scope.loggedIn = false;
       setTimeout(function() {
-        $scope.logoutStatus = true;
-        $scope.logoutStatusButtons = true;
-      }, 500);
+        $scope.loginActive = true;
+      }, 250);
+      
+
+      if (window.localStorage.id_token) {
+        Auth.destroyCredentials();
+      }
     };
 
-
-// from host controller
-
-  $scope.toggleShowUsers = function() {
-    socket.emit('checkForUsers');
-    $scope.showUsers = !$scope.showUsers;
-
-  }
-
-  $scope.invite = function(username) {
-    if ($scope.activeUsers[username]) {
-      console.log("active game is at ", $scope.activeGame);
-      socket.emit('invite', {
-        socketID: $scope.activeUsers[username].socketID,
-        gameID: $scope.activeGame,
-        host: player.profile.userName
-      });
-
-    }
-  };
-
-  socket.on('started', function(data) {
-    console.log("did i get this event?");
-    player.playerNum = String(data.playerNum);
-    $state.go('profile.game');
-  });
-
-  socket.on('hosting', function(data) {
-    $scope.activeGame = data;
-    console.log("did i receive this event? ", $scope.activeGame);
-  });
-
-  socket.on('updateUsers', function(data) {
-    $scope.activeUsers = {};
-    for (var socket in data) {
-
-      if (data[socket].profile && data[socket].profile.userName !== 'anonymous') {
-        $scope.activeUsers[data[socket].profile.userName] = {
-          name: data[socket].profile.userName,
-          joined: data[socket].joined,
-          socketID: socket
-        };
+    $scope.$on('$ionicView.enter', function () {
+      angular.element(document.querySelector('#navStuff')).removeClass('fadeOut');
+      $scope.loggedIn = false;
+      $scope.loginActive = true;
+      $scope.welcomeActive = false;
+      if (window.localStorage.id_token) {
+        Auth.destroyCredentials();
       }
-    }
-  });
 
-  $scope.init = function() {
-
-    if ($window.localStorage.getItem('id_token')) {
-      Auth.loadAuth($window.localStorage.getItem('id_token'));
-      $scope.logoutStatus = false;
-      $scope.logoutStatusButtons = false;
-      $scope.loginStatus = true;
-      $scope.loaded = true;
-    } else {
-      $scope.loaded = true;
-    }
-
-    socket.emit('grabProfile', player.profile);
-
-    socket.emit('checkForUsers');
-    socket.emit('privateGame', player.profile);
-  };
-
-  $scope.init();
+    });
 
   }
 ]);

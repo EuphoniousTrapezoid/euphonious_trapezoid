@@ -1,11 +1,11 @@
 sphero.controller('rulesController', ['$scope', '$state',
   function($scope, $state) {
 
-    $scope.nav = function () {
+    $scope.launch = function () {
       angular.element(document.querySelector('#rules')).addClass('fadeOut');
       setTimeout(function() {
 
-        $state.go('nav');
+        $state.go('profile.launch');
       },500);
 
     }
@@ -118,7 +118,6 @@ sphero.controller('rulesController', ['$scope', '$state',
         };
 
         var moveBack = function () {
-          console.log('moving back');
           var movingBack = d3.select(circle);
           // var goBackTo = parseInt(movingBack.attr('cx')+90);
 
@@ -144,6 +143,14 @@ sphero.controller('rulesController', ['$scope', '$state',
     $scope.$on('$ionicView.enter', function () {
       animateRemoved();
       animateRotate();
+    });
+
+    $scope.$on('$ionicView.leave', function () {
+
+      d3.selectAll('circle.suspend').transition().duration();
+      d3.selectAll("circle.remove").transition().duration();
+      d3.select('g.rotate').transition().duration();
+
     })
     /*
       duration = 125;

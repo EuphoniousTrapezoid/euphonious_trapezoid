@@ -7,7 +7,7 @@ sphero.controller('profileController', ['$scope', '$window', 'Auth', 'socket', '
     $scope.invites = [];
 
     $scope.home = function() {
-      setTimeout(function() {$state.go('nav');}, 500);
+      setTimeout(function() {$state.go('profile.launch');}, 500);
     };
 
   	$scope.logout = function() {

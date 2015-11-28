@@ -5,6 +5,10 @@
 .show {
   display:block;
 }
+
+.full-width {
+  width:100%;
+}
 @font-face {
     font-family: Vermin;
     src: url("vermin-vibes-2-edm-xtc/Vermin Vibes 2 EDM XTC.otf") format("opentype");
@@ -28,7 +32,6 @@ body {
     font-family: Vermin;
     text-align: center;
     font-size: 5em;
-    margin-bottom: 20px;
 }
 
 body, .blue {
@@ -77,8 +80,11 @@ body, .blue {
     line-height: 250px;
 }
 
-#log-list {
+#login {
     padding-top: 50px;
+}
+#gameModes {
+    padding-top:25px;
 }
 
 #nav .item {
@@ -103,9 +109,14 @@ body, .blue {
     max-width:350px;
     margin:auto;
 
-/*    height: 275px;
-*/
+    height: 300px;
+}
 
+#rules {
+    padding-top:10px;
+    display: block;
+    max-width:350px;
+    margin:auto;
 }
 
 .spacer {
@@ -118,7 +129,7 @@ body, .blue {
     vertical-align: middle;
 }
 
-input[type='text'] {
+input[type='text'], input[type='password'], .welcome {
     font-family: Vermin;
     font-size: 2em;
     font-weight: bold;
@@ -127,13 +138,10 @@ input[type='text'] {
     line-height: inherit;
 }
 
-input[type='password'] {
-    font-family: Vermin;
-    font-size: 2em;
-    font-weight: bold;
-    color: #555555;
-    height: 50px;
-    line-height: inherit;
+.welcome {
+  text-align: center;
+  margin:auto;
+  line-height: 50px;
 }
 
 /* Place Holder CSS */

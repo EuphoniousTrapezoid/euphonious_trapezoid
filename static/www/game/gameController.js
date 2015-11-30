@@ -5,7 +5,7 @@ sphero.controller('gameController', ['$scope', '$state', 'game', 'socket', 'play
 
   game.gameInfo.playerNum = String(player.playerNum);
   game.gameInfo.currentTurn = "0";
-  game.gameInfo.maxValence = 11;
+  game.gameInfo.maxValence = 6;
   game.init(element, (game.gameInfo.maxValence * 2) + 1); // second arg should be equal (max valence * 2) + 1, server should ideally send maxValence
 
 

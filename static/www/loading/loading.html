@@ -1,6 +1,17 @@
 <ion-view title="loading" id="loading">
 
     <ion-content scroll="false" id="spin">
+    <div ng-if="isSingle" class="blue" style="
+      z-index: 10;
+      position: relative;
+      margin: auto;
+  ">Loading...</div>
+
+    <div ng-if="!isSingle" class="blue" style="
+      z-index: 10;
+      position: relative;
+      margin: auto;
+  ">Waiting for other players to join...</div>
       <div class="loader">Loading...</div>
     </ion-content>
 

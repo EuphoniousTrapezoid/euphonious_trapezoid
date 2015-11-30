@@ -6,7 +6,6 @@
 // before all nested files are concatenated by Grunt
 
 // Modules
-
 angular.module('angular-jwt',
     [
         'angular-jwt.interceptor',

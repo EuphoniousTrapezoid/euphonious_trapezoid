@@ -746,8 +746,7 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     gradient.append("stop").attr("offset", "70%").attr("stop-color", "#011218");
 
     background = svg.append("rect").attr("width", "100%").attr("height", "100%")
-    // .attr("id", "gradientBackground").attr("fill", "url(#gameGradient)");
-    .attr( 'id', 'gradientBackground' ).attr( 'fill', 'black' );
+    .attr("id", "gradientBackground").attr("fill", "url(#gameGradient)");
 
     grid = svg.append("svg").attr("id", "grid");
     indicator = grid.append("circle").datum( {id: null} ).attr("r", anchorRadius).attr("cx", "50%").attr("cy", "50%")
@@ -777,7 +776,7 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     lowpass.frequency.value = 5000;
     highpass = context.createBiquadFilter( );
     highpass.type = 'highpass';
-    highpass.frequency.value = 10;
+    highpass.frequency.value = 50;
     for (var key in sounds) {
       tracks[key] = context.createGain();
       if (key !== 'rotatorDrones') {
@@ -794,7 +793,7 @@ sphero.factory('game', ['scales', 'findChords', function (scales, findChords) {
     tracks.rotatorDrones.gain.value = 0.75;
     tracks.moved.gain.value = 2;
     tracks.fell.gain.value = 0.5;
-    tracks.indicator.gain.value = 1.25;
+    tracks.indicator.gain.value = 0.75;
     tracks.off.gain.value = 0.15;
     tracks.shake.gain.value = 0.15;
     compressor = context.createDynamicsCompressor( );

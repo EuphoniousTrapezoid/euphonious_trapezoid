@@ -115,34 +115,10 @@ sphero.factory('Auth', ['$http', 'SpheroApiUrl', '$window', 'player',
  */
 sphero.factory('socket', ['SpheroApiUrl', '$rootScope', function(SpheroApiUrl, $rootScope) {
   var socket;
-  // if (window.__karma__) { //in case we do testing with karma and phantom
-  //   socket = io.connect(window.location.protocol + "//" + window.location.hostname + ":" + 1337);
-  // } else {
+
   socket = io.connect(SpheroApiUrl);
-  // }
 
   return socket;
-  // return {
-  //   on: function(eventName, callback) {
-  //     socket.on(eventName, function() {
-  //       var args = arguments;
-  //       $rootScope.$apply(function() {
-  //         callback.apply(socket, args);
-  //       });
-  //     });
-  //   },
-  //   emit: function(eventName, data, callback) {
-
-  //     socket.emit(eventName, data, function() {
-  //       var args = arguments;
-  //       $rootScope.$apply(function() {
-  //         if (callback) {
-  //           callback.apply(socket, args);
-  //         }
-  //       });
-  //     });
-  //   }
-  // };
 
 }]);
 

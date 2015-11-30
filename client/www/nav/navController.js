@@ -42,6 +42,13 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
       // else, if $scope.signupActive === true
       if (username && password && email) {
         console.log("username: ", username, "password: ", password, "email: ", email);
+        $scope.signupActive = false;
+        $scope.signUpMessage = 'Creating account...';
+
+        setTimeout(function () {
+          $scope.welcomeActive = true;
+        }, 1);
+        
         Auth.signUp(username, password, email)
           .then(function (resp) {
             Auth.login(username, password)
@@ -49,12 +56,8 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
                 player.profile = user.profile;
                 $window.localStorage.setItem('id_token', user.token);
 
+                $scope.loggedIn = true;
                 $scope.signUpMessage = 'Welcome ' + username;
-                $scope.signupActive = false;
-                setTimeout(function () {
-                  $scope.loggedIn = true;
-                  $scope.welcomeActive = true;
-                }, 1);
               });
 
             // $scope.login(username, password);

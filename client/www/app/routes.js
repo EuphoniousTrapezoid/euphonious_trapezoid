@@ -15,6 +15,12 @@ router.config(function($stateProvider, $urlRouterProvider) {
       controller: 'navController',
       cache: false
     })
+    .state('rules', {
+      url: '/rules',
+      templateUrl: 'nav/rules.html',
+      controller: 'rulesController',
+      cache:false
+    })
     .state('profile', {
       url: '/profile',
       abstract: true,
@@ -23,7 +29,7 @@ router.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('profile.loading', {
       url: '/loading',
-      params: { action: null, gameID: null },
+      params: { action: null, gameID: null, numPlayers: null },
       views: {
         'profile': {
           templateUrl: 'loading/loading.html',

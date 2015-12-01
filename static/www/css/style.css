@@ -1,11 +1,30 @@
 /* Empty. Add your own CSS if you like */
+.hidden {
+  display: none;
+}
+.show {
+  display:block;
+}
 
+.full-width {
+  width:100%;
+}
 @font-face {
     font-family: Vermin;
     src: url("vermin-vibes-2-edm-xtc/Vermin Vibes 2 EDM XTC.otf") format("opentype");
 }
 
-#nav {
+@font-face {
+    font-family: Inconsolata;
+    src: url("inconsolata/Inconsolata-Regular.ttf");
+}
+
+body {
+  font-family: Inconsolata, arial, sans-serif;
+
+}
+
+#nav,#rules {
     background-color: black;
 }
 
@@ -13,10 +32,9 @@
     font-family: Vermin;
     text-align: center;
     font-size: 5em;
-    margin-bottom: 20px;
 }
 
-.blue {
+body, .blue {
     color: #00a8db;
 }
 
@@ -62,8 +80,11 @@
     line-height: 250px;
 }
 
-#log-list {
+#login {
     padding-top: 50px;
+}
+#gameModes {
+    padding-top:25px;
 }
 
 #nav .item {
@@ -83,24 +104,32 @@
     background-color: black;
 }
 
-#spacer-wrapper {
+.spacer-wrapper {
     display: block;
-    width: 100%;
-    height: 275px;
-    text-align: center;
-    line-height: 275px;
-    vertical-align: middle;
+    max-width:350px;
+    margin:auto;
+
+    height: 300px;
+}
+
+#rules {
+    padding-top:10px;
+    display: block;
+    max-width:350px;
+    margin:auto;
 }
 
 .spacer {
     display: block;
     width: 100%;
-    height: 275px;
+
+    /*height: 275px;*/
+
     text-align: center;
     vertical-align: middle;
 }
 
-input[type='text'] {
+input[type='text'], input[type='password'], .welcome {
     font-family: Vermin;
     font-size: 2em;
     font-weight: bold;
@@ -109,13 +138,10 @@ input[type='text'] {
     line-height: inherit;
 }
 
-input[type='password'] {
-    font-family: Vermin;
-    font-size: 2em;
-    font-weight: bold;
-    color: #555555;
-    height: 50px;
-    line-height: inherit;
+.welcome {
+  text-align: center;
+  margin:auto;
+  line-height: 50px;
 }
 
 /* Place Holder CSS */
@@ -222,7 +248,7 @@ input[type='password'] {
     display: inline-block;
 }
 
-.nav-buttons button {
+.nav-buttons button, .nav-buttons a {
     font-family: Vermin;
     font-size: 12px;
     display: inline-block;
@@ -505,4 +531,9 @@ button .head, span .head {
   border: 0;
   border-radius: 10px;
   background-color: #6C6D6E;
+}
+
+.rules svg {
+  display: block;
+  margin: auto;
 }

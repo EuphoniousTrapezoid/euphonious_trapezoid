@@ -1,20 +1,13 @@
-sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'player', '$ionicPopup',
-  function($scope, $window, Auth, $state, player, $ionicPopup) {
+sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'player', '$ionicPopup', 'socket',
+  function($scope, $window, Auth, $state, player, $ionicPopup, socket) {
 
-    $scope.loaded = false;
-    $scope.loginStatus = false;
-    $scope.logoutStatus = true;
-    $scope.logoutStatusButtons = true;
-    $scope.playActive = false;
     $scope.loginActive = true;
     $scope.signupActive = false;
-    $scope.pushIt = true;
+    $scope.welcomeActive = false;
 
-    $scope.single = function() {
-      $state.go('profile.loading', {
-        action: 'single'
-      });
-    };
+    $scope.loggedIn = false;
+
+    $scope.signUpMessage = "";
 
     $scope.play = function() {
       var anonPlayer = Auth.playAnon();
@@ -23,14 +16,13 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
           if (user) {
             player.profile = user.profile;
             $window.localStorage.setItem('id_token', user.token);
-            var isAuth = Auth.checkAuth();
+
+            angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
             setTimeout(function() {
-              $scope.logoutStatus = !isAuth;
-            }, 25);
-            $scope.logoutStatusButtons = !isAuth;
-            setTimeout(function() {
-              $scope.loginStatus = isAuth;
-            }, 150);
+
+              $state.go('profile.launch');
+            },500);
+
           } else {
             alert('Invalid login, please login or signup');
           }
@@ -40,82 +32,110 @@ sphero.controller('navController', ['$scope', '$window', 'Auth', '$state', 'play
     $scope.signUp = function(username, password, email) {
       if ($scope.signupActive === false) {
         $scope.loginActive = false;
+        $scope.welcomeActive = false;
         setTimeout(function() {
             $scope.signupActive = true;
-          },
-          1);
+          }, 1);
         return null;
       }
 
+      // else, if $scope.signupActive === true
       if (username && password && email) {
         console.log("username: ", username, "password: ", password, "email: ", email);
+        $scope.signupActive = false;
+        $scope.signUpMessage = 'Creating account...';
+
+        setTimeout(function () {
+          $scope.welcomeActive = true;
+        }, 1);
+        
         Auth.signUp(username, password, email)
-          .then(function() {
-            $scope.pushIt = false;
-            $scope.login(username, password);
+          .then(function (resp) {
+            Auth.login(username, password)
+              .then(function(user) {
+                player.profile = user.profile;
+                $window.localStorage.setItem('id_token', user.token);
+
+                $scope.loggedIn = true;
+                $scope.signUpMessage = 'Welcome ' + username;
+              });
+
+            // $scope.login(username, password);
           }, function(err) {
             console.log(err);
-            //handle error
+            console.log('an error')
+            if(err.data === 'username already taken') {
+              $scope.signUpMessage = 'Username ' + username + ' already exists try again'
+              $scope.signupActive = false;
+              setTimeout(function () {
+                $scope.welcomeActive = true;
+              }, 1);
+            }
           });
       }
     };
 
 
     $scope.login = function(username, password) {
-      if (!$scope.loginActive && $scope.pushIt) {
+      if (!$scope.loginActive) {
         $scope.signupActive = false;
         setTimeout(function() {
             $scope.loginActive = true;
           },
           1);
         return null;
-      }
-      console.log(username, password);
-      if ($scope.loginActive && username && password) {
-        Auth.login(username, password)
-          .then(function(user) {
-            if (user) {
-              player.profile = user.profile;
-              $window.localStorage.setItem('id_token', user.token);
-              var isAuth = Auth.checkAuth();
-              $scope.logoutStatusButtons = !isAuth;
-              setTimeout(function() {
-                $scope.logoutStatus = !isAuth;
-              }, 25);
-              setTimeout(function() {
-                $scope.loginStatus = isAuth;
-              }, 150);
-            } else {
-              //alert('Invalid login, please login or signup');
-            }
-          });
-      }
-    };
+      } else if (window.localStorage.id_token) {
+          angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
+          console.log('player profile launching: ', player.profile);
 
-    $scope.logout = function() {
-      Auth.destroyCredentials();
-      $scope.loginStatus = false;
-      setTimeout(function() {
-        $scope.logoutStatus = true;
-        $scope.logoutStatusButtons = true;
-      }, 250);
-    };
+          setTimeout(function() {
+            $state.go('profile.launch');
+          },500);
 
-    $scope.load = function() {
-      if ($window.localStorage.getItem('id_token')) {
-        Auth.loadAuth($window.localStorage.getItem('id_token'));
-        $scope.logoutStatus = false;
-        $scope.logoutStatusButtons = false;
-        $scope.loginStatus = true;
-        $scope.loaded = true;
       } else {
-        $scope.loaded = true;
+        if (username && password) {
+          Auth.login(username, password)
+            .then(function(user) {
+              if (user) {
+                player.profile = user.profile;
+                $window.localStorage.setItem('id_token', user.token);
+                angular.element(document.querySelector('#navStuff')).addClass('fadeOut');
+                setTimeout(function() {
+                  $state.go('profile.launch');
+                },500);
+
+              } else {
+                //alert('Invalid login, please login or signup');
+              }
+            });
+        }
+      }
+
+    };
+
+    $scope.logout = function () {
+      $scope.welcomeActive = false;
+      $scope.loggedIn = false;
+      setTimeout(function() {
+        $scope.loginActive = true;
+      }, 250);
+      
+
+      if (window.localStorage.id_token) {
+        Auth.destroyCredentials();
       }
     };
-    // will change the above auth check to be server-side later and integrate promises
 
-    $scope.load();
+    $scope.$on('$ionicView.enter', function () {
+      angular.element(document.querySelector('#navStuff')).removeClass('fadeOut');
+      $scope.loggedIn = false;
+      $scope.loginActive = true;
+      $scope.welcomeActive = false;
+      if (window.localStorage.id_token) {
+        Auth.destroyCredentials();
+      }
 
+    });
 
   }
 ]);

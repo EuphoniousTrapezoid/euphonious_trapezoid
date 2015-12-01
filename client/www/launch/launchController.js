@@ -1,173 +1,84 @@
-sphero.controller('launchController', ['$scope', '$state', 'player', 'socket', function($scope, $state, player, socket) {
+sphero.controller('launchController', ['$scope', '$state', 'player', 'socket', 'Auth', function($scope, $state, player, socket, Auth) {
 
+  $scope.activeUsers = {};
+  $scope.activeGame = null;
+  $scope.showUsers = false;
 
-	$scope.join = function() {
+  $scope.profile = player.profile;
 
-		$state.go('profile.loading', { action: 'join' });
-
-  };
 
   $scope.back = function() {
     $state.go('nav');
   }
 
-  $scope.profile = player.profile;
-  console.log($scope.profile);
-
   $scope.logout = function() {
     Auth.destroyCredentials();
+    angular.element(document.querySelector('#gameModes')).addClass('fadeOut');
+    setTimeout(function () {
+      $state.go('nav');
+    },250);
   };
 
-  $scope.hostGame = function() {
+  $scope.single = function() {
+    $state.go('profile.loading', {
+      action: 'single'
+    });
+  };
 
-    $state.go('profile.host');
-
+  $scope.join = function(numPlayers) {
+    $state.go('profile.loading', { action: 'join', numPlayers: numPlayers });
   };
 
 
-  $scope.init = function() {
+  $scope.rules = function () {
+    angular.element(document.querySelector('#gameModes')).addClass('fadeOut');
+    setTimeout(function() {
 
+      $state.go('rules');
+    },250);
+  }
+
+// from host controller
+
+  $scope.toggleShowUsers = function() {
+    socket.emit('checkForUsers');
+    $scope.showUsers = !$scope.showUsers;
+
+  }
+
+  $scope.invite = function(username) {
+    if ($scope.activeUsers[username]) {
+      console.log("active game is at ", $scope.activeGame);
+      socket.emit('invite', {
+        socketID: $scope.activeUsers[username].socketID,
+        gameID: $scope.activeGame,
+        host: player.profile.userName
+      });
+
+    }
+  };
+
+
+  socket.on('updateUsers', function(data) {
+    $scope.activeUsers = {};
+    for (var socket in data) {
+
+      if (data[socket].profile && data[socket].profile.userName !== 'anonymous') {
+        $scope.activeUsers[data[socket].profile.userName] = {
+          name: data[socket].profile.userName,
+          joined: data[socket].joined,
+          socketID: socket
+        };
+      }
+    }
+    console.log($scope.activeUsers);
+  });
+
+  $scope.$on('$ionicView.enter', function () {
+    angular.element(document.querySelector('#gameModes')).removeClass('fadeOut');
     socket.emit('grabProfile', player.profile);
-
-  };
-
-  $scope.init();
-
-  // animation ====================
-
-  var colors = ["#fc9bcb", "#97d9a1", "#00a8db", "#787b8c"];
-
-  width = window.innerWidth;
-  height = window.innerHeight * 0.7;
-
-  var animate = d3.select('#animate')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('class', 'svg');
-
-  //will refactor these into a class tomorrow (zs)
-
-  var ball0 = animate.append('circle')
-    .style('fill', colors[0])
-    .attr("r", 25)
-    .attr("cx", 50)
-    .attr("cy", 50)
-
-  var ball1 = animate.append('circle')
-    .style('fill', colors[1])
-    .attr("r", 25)
-    .attr("cx", 100)
-    .attr("cy", 100)
-
-  var ball2 = animate.append('circle')
-    .style('fill', colors[2])
-    .attr("r", 25)
-    .attr("cx", 150)
-    .attr("cy", 150)
-
-  var ball3 = animate.append('circle')
-    .style('fill', colors[3])
-    .attr("r", 25)
-    .attr("cx", 200)
-    .attr("cy", 200)
-
-
-  moveH0 = 3;
-  moveV0 = 3;
-
-  moveH1 = -3;
-  moveV1 = 3;
-
-  moveH2 = 3;
-  moveV2 = -3;
-
-  moveH3 = -3;
-  moveV3 = -3;
-
-
-  var move0 = function() {
-    ball0.attr("cx", function() {
-        var xPos = +d3.select(this).attr("cx");
-        if (xPos > width - 25 || xPos < 0 + 25) {
-          moveH0 *= -1;
-        }
-        return xPos += moveH0;
-      })
-      .attr("cy", function() {
-        var yPos = +d3.select(this).attr("cy");
-        if (yPos > height - 25 || yPos < 0 + 25) {
-          moveV0 *= -1;
-        }
-        return yPos += moveV0;
-      });
-    window.requestAnimationFrame(move0);
-  }
-
-  var move1 = function() {
-    ball1.attr("cx", function() {
-        var xPos = +d3.select(this).attr("cx");
-        if (xPos > width - 25 || xPos < +25) {
-          moveH1 *= -1;
-        }
-        return xPos += moveH1;
-      })
-      .attr("cy", function() {
-        var yPos = +d3.select(this).attr("cy");
-        if (yPos > height - 25 || yPos < 0 + 25) {
-          moveV1 *= -1;
-        }
-        return yPos += moveV1;
-      });
-    window.requestAnimationFrame(move1);
-  }
-
-  var move2 = function() {
-    ball2.attr("cx", function() {
-        var xPos = +d3.select(this).attr("cx");
-        if (xPos > width - 25 || xPos < 0 + 25) {
-          moveH2 *= -1;
-        }
-        return xPos += moveH2;
-      })
-      .attr("cy", function() {
-        var yPos = +d3.select(this).attr("cy");
-        if (yPos > height - 25 || yPos < 0 + 25) {
-          moveV2 *= -1;
-        }
-        return yPos += moveV2;
-      });
-    window.requestAnimationFrame(move2);
-  }
-
-  var move3 = function() {
-    ball3.attr("cx", function() {
-        var xPos = +d3.select(this).attr("cx");
-        if (xPos > width - 25 || xPos < 0 + 25) {
-          moveH3 *= -1;
-        }
-        return xPos += moveH3;
-      })
-      .attr("cy", function() {
-        var yPos = +d3.select(this).attr("cy");
-        if (yPos > height - 25 || yPos < 0 + 25) {
-          moveV3 *= -1;
-        }
-        return yPos += moveV3;
-      });
-    window.requestAnimationFrame(move3);
-  }
-
-  //collisions
-
-  var distance = function(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((x2 - x1), 2));
-  }
-
-  window.requestAnimationFrame(move0);
-  window.requestAnimationFrame(move1);
-  window.requestAnimationFrame(move2);
-  window.requestAnimationFrame(move3);
-
+    socket.emit('checkForUsers');
+    socket.emit('privateGame', player.profile);
+  });
 
 }]);
